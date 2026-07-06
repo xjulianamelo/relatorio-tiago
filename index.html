@@ -2,652 +2,948 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Tiago IA · Relatório Executivo · Junho 2026</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relatório Executivo · Tiago · Junho 2026</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-<script>
-function switchMonth(m){
-  document.querySelectorAll(".mtab").forEach(b=>b.classList.remove("active"));
-  const mb=document.querySelector('[onclick="switchMonth(\''+m+'\')"]');
-  if(mb) mb.classList.add("active");
-  document.getElementById("subnav-jun").style.display=m==="jun"?"flex":"none";
-  document.getElementById("subnav-jul").style.display=m==="jul"?"flex":"none";
-  switchTab(m==="jun"?"geral":"s1jul",m);
-}
-function switchTab(tab,month){
-  document.querySelectorAll(".page").forEach(p=>p.classList.remove("show"));
-  document.querySelectorAll(".stab").forEach(b=>b.classList.remove("active"));
-  const p=document.getElementById("page-"+tab+"-"+month);
-  if(p) p.classList.add("show");
-  const btn=document.querySelector('[onclick="switchTab(\''+tab+'\',\''+month+'\')"]');
-  if(btn) btn.classList.add("active");
-}
-</script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:system-ui,sans-serif;background:#f0f4ff;color:#0f172a;font-size:13px;line-height:1.6}
-.topbar{background:#0f2d8a;color:#fff;padding:0 24px;height:50px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:200}
-.logo{background:#1a47b8;width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
-.topbar-title{font-size:13px;font-weight:700}
-.topbar-sub{font-size:11px;opacity:.45;margin-left:4px}
-.month-tabs{display:flex;gap:2px;margin-left:auto}
-.mtab{padding:5px 14px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;color:rgba(255,255,255,.5);background:none;border:none;transition:all .15s}
-.mtab.active{background:rgba(255,255,255,.12);color:#fff}
-.sub-nav{background:#fff;border-bottom:1px solid #dde3f5;padding:0 24px;display:flex;gap:2px;position:sticky;top:50px;z-index:100}
-.stab{padding:10px 14px;font-size:11px;font-weight:600;cursor:pointer;color:#64748b;border:none;background:none;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
-.stab.active{color:#1a47b8;border-bottom-color:#1a47b8}
-.page{display:none;padding:20px 24px 60px;max-width:1140px;margin:0 auto}
-.page.show{display:block}
-.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
-.kpi-card{background:#fff;border:1px solid #dde3f5;border-radius:10px;padding:14px;position:relative;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04)}
-.kpi-top{position:absolute;top:0;left:0;right:0;height:3px}
-.kpi-label{font-size:9px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px}
-.kpi-value{font-size:26px;font-weight:300;line-height:1;letter-spacing:-.02em}
-.kpi-sub{font-size:10px;color:#94a3b8;margin-top:5px}
-.kpi-delta{font-size:11px;font-weight:600;margin-top:4px}
-.prog-wrap{background:#fff;border:1px solid #dde3f5;border-radius:10px;padding:14px 18px;margin-bottom:16px}
-.prog-track{height:7px;background:#f1f5f9;border-radius:99px;position:relative;margin:8px 0}
-.prog-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,#0f2d8a,#3b7cf6)}
-.prog-labels{display:flex;justify-content:space-between;font-size:10px;color:#94a3b8}
-.sec{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;margin:18px 0 8px}
-.sec-inner{font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:12px}
-.card{background:#fff;border:1px solid #dde3f5;border-radius:10px;padding:16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
-.cw{position:relative;height:220px}
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+:root{--bg:#f8fafc;--surface:#ffffff;--border:#e2e8f0;--border-light:#f1f5f9;--shadow:0 1px 4px rgba(0,0,0,.06);--shadow-md:0 4px 16px rgba(0,0,0,.08);--blue:#1a47b8;--blue-dark:#0f2d8a;--blue-lt:#eff4ff;--blue-mid:#3b68d4;--green:#166534;--green-lt:#dcfce7;--green-mid:#16a34a;--amber:#92400e;--amber-lt:#fef3c7;--amber-mid:#d97706;--red:#991b1b;--red-lt:#fee2e2;--red-mid:#dc2626;--purple:#4c1d95;--purple-lt:#ede9fe;--purple-mid:#7c3aed;--slate-50:#f8fafc;--slate-100:#f1f5f9;--slate-200:#e2e8f0;--slate-400:#94a3b8;--slate-500:#64748b;--slate-700:#334155;--slate-900:#0f172a;--radius:8px;--radius-lg:12px;--radius-xl:16px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--slate-900);font-size:13px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.topbar{background:var(--blue-dark);padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:52px;position:sticky;top:0;z-index:200;box-shadow:0 1px 0 rgba(255,255,255,.08)}
+.topbar-brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.topbar-logo{width:28px;height:28px;border-radius:7px;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;letter-spacing:-.5px}
+.topbar-name{font-size:13px;font-weight:600;color:#fff;letter-spacing:-.01em}
+.topbar-sub{font-size:11px;color:rgba(255,255,255,.45);margin-left:2px}
+.topbar-meta{display:flex;align-items:center;gap:8px;font-size:11px;color:rgba(255,255,255,.45)}
+.status-dot{width:6px;height:6px;border-radius:50%;background:#4ade80;box-shadow:0 0 0 2px rgba(74,222,128,.25)}
+.month-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 32px;display:flex;gap:0;overflow-x:auto;position:sticky;top:52px;z-index:100}
+.month-tab{padding:0 20px;height:44px;font-size:12px;font-weight:500;color:var(--slate-500);cursor:pointer;border:none;border-bottom:2px solid transparent;background:none;white-space:nowrap;transition:color .15s,border-color .15s;letter-spacing:-.01em;display:flex;align-items:center;gap:6px}
+.month-tab:hover{color:var(--slate-900)}
+.month-tab.active{color:var(--blue);border-bottom-color:var(--blue);font-weight:600}
+.week-bar{padding:16px 32px 0;display:flex;gap:6px;flex-wrap:wrap;background:var(--bg)}
+.week-tab{padding:5px 14px;font-size:11px;font-weight:500;color:var(--slate-500);background:var(--surface);border:1px solid var(--border);border-radius:99px;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:5px}
+.week-tab:hover{border-color:var(--blue);color:var(--blue)}
+.week-tab.active{background:var(--blue);color:#fff;border-color:var(--blue);box-shadow:0 1px 6px rgba(26,71,184,.3)}
+.main{padding:20px 32px 64px;max-width:1120px}
+.week-panel{display:none}
+.week-panel.active{display:block}
+.sec{font-size:11px;font-weight:600;color:var(--slate-400);text-transform:uppercase;letter-spacing:.07em;margin:28px 0 12px}
+.sec:first-child{margin-top:4px}
+.kpi-row{display:grid;gap:10px;margin-bottom:10px}
+.kpi-5{grid-template-columns:repeat(5,1fr)}
+.kpi-4{grid-template-columns:repeat(4,1fr)}
+.kpi-3{grid-template-columns:repeat(3,1fr)}
+.kpi-card{background:var(--surface);border:1px solid var(--border-light);border-radius:var(--radius-lg);padding:16px 18px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--radius-lg) var(--radius-lg) 0 0}
+.kpi-card.k-blue::before{background:var(--blue)}
+.kpi-card.k-green::before{background:var(--green-mid)}
+.kpi-card.k-amber::before{background:var(--amber-mid)}
+.kpi-card.k-red::before{background:var(--red-mid)}
+.kpi-card.k-purple::before{background:var(--purple-mid)}
+.kpi-card.k-slate::before{background:var(--slate-400)}
+.kpi-label{font-size:10px;font-weight:600;color:var(--slate-400);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.kpi-value{font-size:26px;font-weight:300;color:var(--slate-900);line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.kv-blue{color:var(--blue)}.kv-green{color:var(--green-mid)}.kv-amber{color:var(--amber-mid)}.kv-red{color:var(--red-mid)}
+.kpi-delta{font-size:10px;font-weight:500;margin-top:5px;display:flex;align-items:center;gap:3px}
+.d-up{color:var(--green-mid)}.d-dn{color:var(--red-mid)}
+.kpi-sub{font-size:10px;color:var(--slate-400);margin-top:4px}
+.prog-wrap{background:var(--surface);border:1px solid var(--border-light);border-radius:var(--radius-lg);padding:16px 20px;margin-bottom:10px;box-shadow:var(--shadow)}
+.prog-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.prog-head-label{font-size:12px;font-weight:500;color:var(--slate-700)}
+.prog-head-val{font-size:20px;font-weight:300;color:var(--blue);letter-spacing:-.02em}
+.prog-track{height:8px;background:var(--slate-100);border-radius:99px;position:relative;overflow:visible}
+.prog-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--blue-dark),var(--blue-mid));transition:width .8s cubic-bezier(.4,0,.2,1);box-shadow:0 1px 4px rgba(26,71,184,.3)}
+.prog-marker{position:absolute;top:-5px;bottom:-5px;width:2px;background:var(--amber-mid);border-radius:1px}
+.prog-marker::after{content:attr(data-label);position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--amber-mid);font-weight:600;white-space:nowrap;letter-spacing:.02em}
+.prog-milestones{display:flex;justify-content:space-between;margin-top:8px;font-size:10px;color:var(--slate-400)}
+.card{background:var(--surface);border:1px solid var(--border-light);border-radius:var(--radius-lg);padding:20px;margin-bottom:10px;box-shadow:var(--shadow)}
+.card-title{font-size:11px;font-weight:600;color:var(--slate-500);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.card-title-icon{width:20px;height:20px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px}
+.cw{position:relative;width:100%}
+.cw-sm{height:180px}.cw-md{height:240px}.cw-lg{height:280px}.cw-xl{height:320px}
+.leg{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:14px}
+.li{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--slate-500)}
+.ld{width:8px;height:8px;border-radius:50%}
+.ll{width:18px;height:2.5px;border-radius:1px}
+.ldash{width:18px;height:0;border-top:2px dashed}
+.narr{background:var(--surface);border:1px solid var(--border-light);border-left:3px solid var(--blue);border-radius:0 var(--radius-lg) var(--radius-lg) 0;padding:18px 22px;margin-bottom:10px;box-shadow:var(--shadow)}
+.narr.n-green{border-left-color:var(--green-mid)}.narr.n-amber{border-left-color:var(--amber-mid)}.narr.n-red{border-left-color:var(--red-mid)}.narr.n-purple{border-left-color:var(--purple-mid)}
+.narr h4{font-size:13px;font-weight:600;color:var(--slate-900);margin-bottom:10px;line-height:1.4}
+.narr p{font-size:12px;color:var(--slate-500);line-height:1.75;margin-bottom:8px}
+.narr p:last-child{margin-bottom:0}
+.narr strong{color:var(--slate-900);font-weight:500}
+.pill{display:inline-flex;align-items:center;padding:2px 8px;border-radius:99px;font-size:10px;font-weight:600;letter-spacing:.01em;white-space:nowrap}
+.p-green{background:var(--green-lt);color:var(--green)}.p-amber{background:var(--amber-lt);color:var(--amber)}.p-red{background:var(--red-lt);color:var(--red)}.p-blue{background:var(--blue-lt);color:var(--blue)}.p-purple{background:var(--purple-lt);color:var(--purple)}.p-slate{background:var(--slate-100);color:var(--slate-500)}
 .dt{width:100%;border-collapse:collapse;font-size:11px}
-.dt th{text-align:left;padding:8px 10px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#94a3b8;border-bottom:1px solid #dde3f5;background:#f8faff;white-space:nowrap}
+.dt th{text-align:left;padding:9px 12px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--slate-400);border-bottom:1px solid var(--border);white-space:nowrap;background:var(--slate-50)}
 .dt th.r{text-align:right}.dt th.c{text-align:center}
-.dt td{padding:8px 10px;border-bottom:1px solid #f1f5f9;color:#334155;vertical-align:middle}
+.dt td{padding:9px 12px;border-bottom:1px solid var(--border-light);color:var(--slate-700);vertical-align:middle;font-size:11px}
 .dt td.r{text-align:right}.dt td.c{text-align:center}
-.dt tr:last-child td{border-bottom:none}.dt tr:hover td{background:#fafbff}
-.pill{display:inline-block;padding:2px 8px;border-radius:99px;font-size:10px;font-weight:700}
-.gr{background:#dcfce7;color:#166534}.am{background:#fef3c7;color:#92400e}.rd{background:#fee2e2;color:#991b1b}.sl{background:#f1f5f9;color:#64748b}
-/* Roadmap */
-.rm-card{background:#fff;border:1px solid #dde3f5;border-radius:10px;overflow:hidden;margin-bottom:10px}
-.rm-head{display:grid;grid-template-columns:90px 1fr 80px;gap:10px;align-items:start;padding:12px 14px;border-bottom:1px solid #f1f5f9}
-.rm-pri{font-size:9px;font-weight:700;padding:3px 8px;border-radius:5px;text-align:center}
-.rm-title{font-size:13px;font-weight:700;color:#0f172a;margin-bottom:3px}
-.rm-desc{font-size:11.5px;color:#374151;line-height:1.6}
-.rm-impact{font-size:11px;color:#374151;line-height:1.6;padding:10px 14px;background:#f8faff}
-@media(max-width:700px){
-  .kpi-grid{grid-template-columns:1fr 1fr}
-  .g2{grid-template-columns:1fr}
-  .month-tabs{display:none}
-}
+.dt tr:last-child td{border-bottom:none}.dt tr:hover td{background:var(--slate-50)}
+.dow-wrap{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:16px}
+.dow-cell{border-radius:var(--radius-lg);padding:14px 10px;text-align:center;border:1px solid transparent}
+.dow-name{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.dow-ret{font-size:22px;font-weight:300;line-height:1;margin-bottom:4px;letter-spacing:-.02em}
+.dow-csat{font-size:10px;margin-bottom:3px}.dow-vol{font-size:9px;opacity:.65}
+.dow-tag{font-size:9px;font-weight:600;margin-top:5px;padding:1px 6px;border-radius:99px;display:inline-block}
+.tl{position:relative;padding-left:30px}
+.tl::before{content:'';position:absolute;left:11px;top:0;bottom:0;width:1.5px;background:var(--border)}
+.tl-item{position:relative;margin-bottom:20px}
+.tl-dot{position:absolute;left:-24px;top:3px;width:12px;height:12px;border-radius:50%;border:2px solid var(--surface);z-index:1;box-shadow:0 0 0 1px var(--border)}
+.tl-dot.cs{background:var(--blue)}.tl-dot.tech{background:var(--green-mid)}.tl-dot.both{background:var(--amber-mid)}.tl-dot.ops{background:var(--purple-mid)}.tl-dot.active{background:var(--amber-mid);box-shadow:0 0 0 3px var(--amber-lt)}
+.tl-date{font-size:10px;color:var(--slate-400);font-weight:500;margin-bottom:3px;display:flex;align-items:center;gap:6px}
+.tl-title{font-size:12px;font-weight:600;color:var(--slate-900);margin-bottom:4px}
+.tl-desc{font-size:11px;color:var(--slate-500);line-height:1.6;margin-bottom:6px}
+.tl-tags{display:flex;gap:5px;flex-wrap:wrap}
+.ti-ret{background:var(--blue-lt);color:var(--blue);padding:1px 8px;border-radius:99px;font-size:10px;font-weight:600}
+.ti-csat{background:var(--green-lt);color:var(--green);padding:1px 8px;border-radius:99px;font-size:10px;font-weight:600}
+.ti-both{background:var(--amber-lt);color:var(--amber);padding:1px 8px;border-radius:99px;font-size:10px;font-weight:600}
+.divider{height:1px;background:var(--border-light);margin:20px 0}
+@media(max-width:768px){.topbar,.month-bar,.week-bar,.main{padding-left:16px;padding-right:16px}.kpi-5,.kpi-4,.kpi-3{grid-template-columns:repeat(2,1fr)}.g2,.g3{grid-template-columns:1fr}.dow-wrap{grid-template-columns:repeat(3,1fr)}}
 </style>
 </head>
 <body>
-
-<div class="topbar">
-  <div class="logo">T</div>
-  <span class="topbar-title">Tiago IA</span>
-  <span class="topbar-sub">Relatório Executivo</span>
-  <div class="month-tabs">
-    <button class="mtab active" onclick="switchMonth('jun')">Junho 2026</button>
-    <button class="mtab" onclick="switchMonth('jul')">Julho 2026</button>
-    <button class="mtab" style="opacity:.35;cursor:default">Agosto 2026</button>
+<header class="topbar">
+  <div class="topbar-brand">
+    <div class="topbar-logo">T</div>
+    <div><span class="topbar-name">Tiago IA</span><span class="topbar-sub">· CS Analytics</span></div>
   </div>
+  <div class="topbar-meta">
+    <span class="status-dot"></span>
+    <span>Atualizado 20/06/2026 · Fonte: Metabase card 13751 · Motoristas excluídos</span>
+  </div>
+</header>
+
+<nav class="month-bar">
+  <button class="month-tab active" onclick="switchMonth('junho',this)"><span>Junho 2026</span><span class="pill p-blue" style="font-size:9px">ativo</span></button>
+  <button class="month-tab" onclick="switchMonth('julho',this)">Julho 2026</button>
+  <button class="month-tab" onclick="switchMonth('agosto',this)">Agosto 2026</button>
+</nav>
+
+<div class="week-bar" id="week-bar">
+  <button class="week-tab active" onclick="switchWeek('geral',this)">Junho — Visão Geral</button>
+  <button class="week-tab" onclick="switchWeek('s1',this)">S1 · 01–07/jun</button>
+  <button class="week-tab" onclick="switchWeek('s2',this)">S2 · 08–14/jun</button>
+  <button class="week-tab" onclick="switchWeek('s3',this)">S3 · 15–20/jun</button>
+  <button class="week-tab" onclick="switchWeek('roadmap',this)">🗺 Roadmap</button>
 </div>
 
-<div class="sub-nav" id="subnav-jun">
-  <button class="stab active" onclick="switchTab('geral','jun')">Junho — Visão Geral</button>
-  <button class="stab" onclick="switchTab('s1','jun')">S1 · 01–07/jun</button>
-  <button class="stab" onclick="switchTab('s2','jun')">S2 · 08–14/jun</button>
-  <button class="stab" onclick="switchTab('s3','jun')">S3 · 15–21/jun</button>
-  <button class="stab" onclick="switchTab('s4','jun')">S4 · 22–28/jun ⭐</button>
-  <button class="stab" onclick="switchTab('roadmap','jun')">↗ Roadmap</button>
-</div>
+<main class="main" id="main-junho">
 
-<div class="sub-nav" id="subnav-jul" style="display:none">
-  <button class="stab active" onclick="switchTab('s1jul','jul')">S1 · 29/jun–04/jul</button>
-</div>
-
-<!-- JUNHO PÁGINAS -->
-<div class="page show" id="page-geral-jun">
+<!-- GERAL -->
+<section class="week-panel active" id="panel-geral">
   <p class="sec">Junho 2026 · Consolidado · Fonte: Metabase intercom.casos_validos · Excluídos: Comercial, Comercial KA, Motoristas</p>
-  
-<div class="kpi-grid">
-  <div class="kpi-card"><div class="kpi-top" style="background:#16a34a"></div>
-    <div class="kpi-label">Retenção FIN</div>
-    <div class="kpi-value" style="color:#16a34a">66.1%</div>
-    <div class="kpi-sub">1199 FIN / 1814 total · Meta 60%</div>
-    <div class="kpi-delta" style="color:#16a34a">✓ Meta atingida</div>
+  <div class="kpi-row kpi-5" id="kpi-geral"></div>
+  <div class="prog-wrap">
+    <div class="prog-head">
+      <div><div class="prog-head-label">Progressão rumo à meta de retenção</div><div style="font-size:11px;color:var(--slate-400);margin-top:2px">M0 = 60% · Meta agosto = 80%</div></div>
+      <div class="prog-head-val" id="prog-val-geral">—</div>
+    </div>
+    <div class="prog-track"><div class="prog-fill" id="prog-fill-geral"></div><div class="prog-marker" style="left:75%" data-label="80% ago"></div></div>
+    <div class="prog-milestones"><span>0%</span><span>20%</span><span>40%</span><span>60% ← meta M0</span><span>80% ← ago</span><span>100%</span></div>
   </div>
-  <div class="kpi-card"><div class="kpi-top" style="background:#d97706"></div>
-    <div class="kpi-label">CSAT Tiago</div>
-    <div class="kpi-value" style="color:#d97706">78.2%</div>
-    <div class="kpi-sub">204/261 avaliações · Meta 80%</div>
-    <div class="kpi-delta" style="color:#d97706">✗ Abaixo 1.8 pp</div>
+  <p class="sec">Evolução diária — Retenção · CSAT · OTIF</p>
+  <div class="card">
+    <div class="leg">
+      <span class="li"><span class="ld" style="background:var(--blue)"></span>Retenção Tiago %</span>
+      <span class="li"><span class="ldash" style="border-color:var(--amber-mid)"></span>CSAT Tiago %</span>
+      <span class="li"><span class="ld" style="background:var(--green-mid);opacity:.3"></span>OTIF% (barras)</span>
+      <span class="li"><span class="ll" style="background:var(--green-mid)"></span>Meta ret 60%</span>
+    </div>
+    <div class="cw cw-xl"><canvas id="c-geral-tl"></canvas></div>
   </div>
-  <div class="kpi-card"><div class="kpi-top" style="background:#1a47b8"></div>
-    <div class="kpi-label">Total Tickets</div>
-    <div class="kpi-value" style="color:#1a47b8">1814</div>
-    <div class="kpi-sub">Excl. Comercial · KA · Motoristas</div>
-    <div class="kpi-delta" style="color:#64748b">01/jun – 28/jun</div>
+  <div class="g2">
+    <div class="card">
+      <div class="card-title"><span class="card-title-icon" style="background:var(--blue-lt)">📊</span>Retenção por macromotivo · Junho</div>
+      <div class="cw cw-md"><canvas id="c-geral-mot"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="card-title-icon" style="background:var(--slate-100)">📦</span>Volume por motivo · FIN vs N2 vs Fora</div>
+      <div class="leg">
+        <span class="li"><span class="ld" style="background:var(--blue)"></span>FIN</span>
+        <span class="li"><span class="ld" style="background:var(--amber-mid)"></span>N2</span>
+        <span class="li"><span class="ld" style="background:var(--slate-400)"></span>Fora</span>
+      </div>
+      <div class="cw cw-md"><canvas id="c-geral-vol"></canvas></div>
+    </div>
   </div>
-  <div class="kpi-card"><div class="kpi-top" style="background:#1a47b8"></div>
-    <div class="kpi-label">Progressão</div>
-    <div class="kpi-value" style="color:#1a47b8">83%</div>
-    <div class="kpi-sub">rumo à meta de agosto (80%)</div>
-    <div class="kpi-delta" style="color:#64748b">base 60% · teto 80%</div>
+  <p class="sec">Padrão por dia da semana — Junho</p>
+  <div class="card">
+    <div class="card-title"><span class="card-title-icon" style="background:var(--blue-lt)">📅</span>Segunda e Sexta como dias críticos; Terça/Quarta como melhores dias</div>
+    <div class="dow-wrap" id="dow-grid"></div>
+    <div class="cw cw-md"><canvas id="c-dow"></canvas></div>
   </div>
-</div>
-<div class="prog-wrap">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-    <div><div style="font-size:12px;font-weight:600">Progressão rumo à meta</div><div style="font-size:10px;color:#64748b">M0=60% · Meta agosto=80%</div></div>
-    <span style="font-size:22px;font-weight:300;color:#1a47b8">66.1%</span>
+  <p class="sec">Análise executiva — Junho 2026</p>
+  <div class="narr n-amber">
+    <h4>📈 Retenção em 49,5% — abaixo da meta M0, mas com tendência crescente S1→S2</h4>
+    <p>Junho encerrou com <strong>49,5% de retenção acumulada</strong> (1.469 FIN / 2.967 total), <strong>10,5 pp abaixo da meta de 60%</strong>. A trajetória é positiva: S1 = 47,3% → S2 = 51,5% → S3 = 50,9% — o pico na S2 reflete a maturação das entregas de roadmap de maio. A S3 manteve-se estável mas não avançou, indicando que o patamar atual representa o teto das otimizações de conteúdo/fluxo sem integração técnica.</p>
+    <p>O principal <strong>freio estrutural</strong>: <strong>Problemas de Logística</strong> gerou 200+ tickets N2 no mês, com retenção Tiago próxima de 0%. O padrão dominante é <em>Falta de item</em> e <em>Inversão de produto</em> — ambos exigem consulta ao PRS para validação. Estimativa de impacto ao resolver: <strong>+11–14 pp de retenção</strong>.</p>
   </div>
-  <div class="prog-track"><div class="prog-fill" style="width:82.6%"></div><div style="position:absolute;left:75%;top:-5px;bottom:-5px;width:2px;background:#d97706"></div></div>
-  <div class="prog-labels"><span>0%</span><span style="color:#16a34a;font-weight:600">60% M0</span><span style="color:#d97706;font-weight:600">80% ago</span><span>100%</span></div>
-</div>
-<p class="sec">Evolução diária — Retenção · CSAT · OTIF</p>
-<div class="card"><div class="cw" style="height:260px"><canvas id="c-daily-MES"></canvas></div></div>
-<p class="sec">Retenção e CSAT por motivo</p>
-<div class="g2">
-  <div class="card"><div class="sec-inner">Retenção % por motivo</div><div class="cw"><canvas id="c-ret-MES"></canvas></div></div>
-  <div class="card"><div class="sec-inner">CSAT Tiago por motivo</div><div class="cw"><canvas id="c-csat-MES"></canvas></div></div>
-</div>
-<p class="sec">Volume FIN vs N2 vs Fora por motivo</p>
-<div class="card"><div class="cw" style="height:200px"><canvas id="c-vol-MES"></canvas></div></div>
-<p class="sec">Tabela detalhada</p>
-<div class="card" style="padding:0;overflow:hidden">
-<table class="dt">
-<thead><tr><th>Motivo</th><th class="r">Total</th><th class="r">FIN</th><th class="r">N2</th><th class="r">Retenção</th><th class="r">CSAT</th><th class="c">Status</th></tr></thead>
-<tbody><tr><td><strong>Pagamento</strong></td><td class="r">552</td><td class="r">352</td><td class="r">197</td><td class="r"><span class="pill gr">64%</span></td><td class="r"><span class="pill gr">80%</span></td><td class="c"><span class="pill gr">ok</span></td></tr><tr><td><strong>Status de entrega</strong></td><td class="r">364</td><td class="r">320</td><td class="r">40</td><td class="r"><span class="pill gr">88%</span></td><td class="r"><span class="pill am">77%</span></td><td class="c"><span class="pill gr">ok</span></td></tr><tr><td><strong>Problemas de Logística</strong></td><td class="r">364</td><td class="r">0</td><td class="r">364</td><td class="r"><span class="pill rd">0%</span></td><td class="r"><span class="pill sl">n/d</span></td><td class="c"><span class="pill rd">bloqueio</span></td></tr><tr><td><strong>Dados cadastrais</strong></td><td class="r">228</td><td class="r">228</td><td class="r">0</td><td class="r"><span class="pill gr">100%</span></td><td class="r"><span class="pill am">74%</span></td><td class="c"><span class="pill gr">ok</span></td></tr><tr><td><strong>Pedido</strong></td><td class="r">112</td><td class="r">105</td><td class="r">7</td><td class="r"><span class="pill gr">94%</span></td><td class="r"><span class="pill am">73%</span></td><td class="c"><span class="pill gr">ok</span></td></tr><tr><td><strong>Crédito</strong></td><td class="r">87</td><td class="r">87</td><td class="r">0</td><td class="r"><span class="pill gr">100%</span></td><td class="r"><span class="pill am">79%</span></td><td class="c"><span class="pill gr">ok</span></td></tr><tr><td><strong>Dúvidas gerais sobre a Praso</strong></td><td class="r">70</td><td class="r">70</td><td class="r">0</td><td class="r"><span class="pill gr">100%</span></td><td class="r"><span class="pill gr">100%</span></td><td class="c"><span class="pill gr">ok</span></td></tr><tr><td><strong>Problemas técnicos com o app</strong></td><td class="r">37</td><td class="r">37</td><td class="r">0</td><td class="r"><span class="pill gr">100%</span></td><td class="r"><span class="pill am">60%</span></td><td class="c"><span class="pill gr">ok</span></td></tr></tbody>
-</table></div>
+  <div class="narr n-purple">
+    <h4>🗺 Correlação com Roadmap de maio: base construída, resultado colhido em junho</h4>
+    <p>As <strong>entregas de maio</strong> criaram a fundação que explica a progressão de junho. Ajuste de linguagem e novos atributos do Tiago elevaram retenção em Dúvidas Praso, Dados Cadastrais e Status de Entrega. A regra de horário (Or. A) reduziu roteamentos incorretos. O gatilho "falar com atendente" após 3ª mensagem melhorou CSAT ao eliminar loops. O <strong>fluxo de cancelamento</strong> (ativo em junho) ainda está em período de medição — impacto esperado a partir de julho.</p>
+  </div>
+  <div class="narr n-amber">
+    <h4>📅 Padrão semanal: Segunda e Sexta como pontos críticos; Terça/Quarta como melhores dias</h4>
+    <p><strong>Segunda-feira</strong> concentra demanda reprimida do fim de semana — maior volume diário, mix de casos complexos de logística e pagamento, retenção abaixo da média. <strong>Sexta-feira</strong> tem volume menor mas proporção elevada de "Fora do horário" — o N2 reduz cobertura e o Tiago não retém sozinho casos de Logística. <strong>Terça e quarta</strong> são os melhores dias: volume equilibrado, mix favorável, retenção acima de 50%.</p>
+  </div>
+  <div class="narr">
+    <h4>⚠️ CSAT Tiago em 76,5% — abaixo da meta de 80%, metodologia corrigida</h4>
+    <p>CSAT Tiago acumulado em <strong>76,5%</strong> (179/234 avaliações com <code>admin_CSAT = 'Tiago'</code>), <strong>3,5 pp abaixo da meta de 80%</strong>. O cálculo correto usa apenas avaliações atribuídas ao Tiago — excluindo CSAT de Arthur, Elizama, Janine, Júllia e Layla (N2). S2 foi a melhor semana (78,6%), S3 a pior (75,0%). O dia com melhor CSAT foi <strong>11/jun: 90,9%</strong> (20/22). Crédito e Pagamento sem confirmação de resolução são os principais detratores — cliente encerra sem saber se o problema foi resolvido.</p>
+  </div>
+</section>
 
-</div>
+<!-- S1 -->
+<section class="week-panel" id="panel-s1">
+  <p class="sec">Semana 1 · 01–07 de junho de 2026</p>
+  <div class="kpi-row kpi-4" id="kpi-s1"></div>
+  <div class="prog-wrap">
+    <div class="prog-head"><div class="prog-head-label">Retenção S1 · meta M0 = 60%</div><div class="prog-head-val" id="prog-val-s1">—</div></div>
+    <div class="prog-track"><div class="prog-fill" id="prog-fill-s1"></div><div class="prog-marker" style="left:75%" data-label="ago 80%"></div></div>
+  </div>
+  <p class="sec">Análise narrativa — S1</p>
+  <div class="narr n-red">
+    <h4>🔴 Retenção 47,3% — abaixo da meta, peso de Logística e Pagamento</h4>
+    <p>S1 encerrou com <strong>47,3%</strong> (397 FIN / 840 total), 12,7 pp abaixo da meta. Principal vetor: <strong>Problemas de Logística</strong> com 13–29 tickets N2/dia dominados por <em>Falta de item</em> e <em>Inversão de produto</em> — 0% de retenção Tiago nesses subcasos, pois exigem consulta ao PRS. Boleto/Pagamento com escalação por falha Credix agravou o quadro. Os dias 02 e 03/jun foram os piores — pico de demanda de segunda e terça com mix desfavorável.</p>
+    <p>Os <strong>efeitos do roadmap de maio</strong> aparecem de forma incipiente: ajuste de linguagem e novos atributos já refletem em Dúvidas Praso (retenção ~100%) e Dados Cadastrais. A regra de horário (Or. A) já operava, reduzindo alguns roteamentos incorretos. Sábado 07/jun registra 80% artificial — volume mínimo, zero N2.</p>
+  </div>
+  <div class="narr n-amber">
+    <h4>⚠️ CSAT Tiago 75,7% — abaixo da meta de 80%, amostra de 74 avaliações</h4>
+    <p>74 avaliações atribuídas ao Tiago na S1 — média de ~12/dia. O melhor dia foi <strong>01/jun: 87,5%</strong> (7/8). O pior foi <strong>06/jun: 50,0%</strong> (2/4), com volume muito baixo. Detratores concentrados em Pagamento (2ª via sem confirmação) e Crédito (limite removido sem resolução explícita). O gatilho "falar com atendente" após 3ª mensagem (maio) já reduziu loops, mas o encerramento de fluxo ainda não confirma resolução ao cliente.</p>
+  </div>
+  <p class="sec">Evolução diária — S1</p>
+  <div class="card">
+    <div class="leg">
+      <span class="li"><span class="ld" style="background:var(--blue)"></span>Retenção %</span>
+      <span class="li"><span class="ldash" style="border-color:var(--amber-mid)"></span>CSAT Tiago %</span>
+    </div>
+    <div class="cw cw-md"><canvas id="c-s1-day"></canvas></div>
+  </div>
+  <div class="g2">
+    <div class="card"><div class="card-title">Volume por time · S1</div><div class="cw cw-sm"><canvas id="c-s1-vol"></canvas></div></div>
+    <div class="card"><div class="card-title">Retenção e CSAT por motivo · S1</div><div class="cw cw-sm"><canvas id="c-s1-mot"></canvas></div></div>
+  </div>
+  <p class="sec">Tabela de motivos + subcategorias críticas · S1</p>
+  <div class="card" style="padding:0;overflow:hidden"><table class="dt" id="t-s1"></table></div>
+</section>
 
-<div class="page" id="page-s1-jun">
-<div class="kpi-grid">
-  <div class="kpi-card"><div class="kpi-top" style="background:#16a34a"></div>
-    <div class="kpi-label">Retenção FIN</div>
-    <div class="kpi-value" style="color:#16a34a">70.0%</div>
-    <div class="kpi-sub">257 FIN / 367 total · Meta 60%</div>
-    <div class="kpi-delta" style="color:#16a34a">✓ Meta atingida</div>
+<!-- S2 -->
+<section class="week-panel" id="panel-s2">
+  <p class="sec">Semana 2 · 08–14 de junho de 2026</p>
+  <div class="kpi-row kpi-4" id="kpi-s2"></div>
+  <div class="prog-wrap">
+    <div class="prog-head"><div class="prog-head-label">Retenção S2 · meta M0 = 60%</div><div class="prog-head-val" id="prog-val-s2">—</div></div>
+    <div class="prog-track"><div class="prog-fill" id="prog-fill-s2"></div><div class="prog-marker" style="left:75%" data-label="ago 80%"></div></div>
   </div>
-  <div class="kpi-card"><div class="kpi-top" style="background:#d97706"></div>
-    <div class="kpi-label">CSAT Tiago</div>
-    <div class="kpi-value" style="color:#d97706">70.9%</div>
-    <div class="kpi-sub">39/55 avaliações · Meta 80%</div>
-    <div class="kpi-delta" style="color:#d97706">✗ Abaixo 9.1 pp</div>
+  <p class="sec">Análise narrativa — S2</p>
+  <div class="narr n-amber">
+    <h4>🟡 Retenção 51,5% — melhor semana do mês · +4,2 pp vs S1</h4>
+    <p>A melhora não é aleatória. Itens concluídos até D12–D15 de maio já estavam totalmente ativos: <strong>Procedure de postergação</strong> (Or. B), <strong>regra de cobrança incorreta</strong> (Or. D) e <strong>ajuste de "falar com humano"</strong> (Or. 2) reduziram escalações desnecessárias. Crédito aumentou participação com retenção alta. O dia <strong>11/06 foi o melhor</strong>: 16 tickets de Status de Entrega retidos com "Confirmação de status" respondida pelo Tiago. O dia 10/06 teve queda por pico de 20 tickets N2 de Logística (Falta de item).</p>
   </div>
-  <div class="kpi-card"><div class="kpi-top" style="background:#1a47b8"></div>
-    <div class="kpi-label">Total Tickets</div>
-    <div class="kpi-value" style="color:#1a47b8">367</div>
-    <div class="kpi-sub">Excl. Comercial · KA · Motoristas</div>
-    <div class="kpi-delta" style="color:#64748b">01–07/jun</div>
+  <div class="narr n-amber">
+    <h4>⚠️ CSAT Tiago 78,6% — melhor semana do mês, 1,4 pp abaixo da meta</h4>
+    <p>84 avaliações atribuídas ao Tiago na S2. Melhor dia: <strong>11/jun: 90,9%</strong> (20/22) — único dia do mês acima da meta de 80%. A queda no dia <strong>13/jun (61,5%)</strong> e <strong>14/jun (50%)</strong> é puxada por volume baixo e tickets de Pagamento sem confirmação de resolução. O monitoramento de CX Score diário (maio) permite identificar esses padrões em tempo real.</p>
   </div>
-  <div class="kpi-card"><div class="kpi-top" style="background:#1a47b8"></div>
-    <div class="kpi-label">Progressão</div>
-    <div class="kpi-value" style="color:#1a47b8">88%</div>
-    <div class="kpi-sub">rumo à meta de agosto (80%)</div>
-    <div class="kpi-delta" style="color:#64748b">base 60% · teto 80%</div>
+  <p class="sec">Evolução diária — S2</p>
+  <div class="card">
+    <div class="leg">
+      <span class="li"><span class="ld" style="background:var(--blue)"></span>Retenção %</span>
+      <span class="li"><span class="ldash" style="border-color:var(--amber-mid)"></span>CSAT Tiago %</span>
+    </div>
+    <div class="cw cw-md"><canvas id="c-s2-day"></canvas></div>
   </div>
-</div>
-<div class="prog-wrap">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-    <div><div style="font-size:12px;font-weight:600">Progressão rumo à meta</div><div style="font-size:10px;color:#64748b">M0=60% · Meta agosto=80%</div></div>
-    <span style="font-size:22px;font-weight:300;color:#1a47b8">70.0%</span>
+  <div class="g2">
+    <div class="card"><div class="card-title">Volume por time · S2</div><div class="cw cw-sm"><canvas id="c-s2-vol"></canvas></div></div>
+    <div class="card"><div class="card-title">Retenção e CSAT por motivo · S2</div><div class="cw cw-sm"><canvas id="c-s2-mot"></canvas></div></div>
   </div>
-  <div class="prog-track"><div class="prog-fill" style="width:87.5%"></div><div style="position:absolute;left:75%;top:-5px;bottom:-5px;width:2px;background:#d97706"></div></div>
-  <div class="prog-labels"><span>0%</span><span style="color:#16a34a;font-weight:600">60% M0</span><span style="color:#d97706;font-weight:600">80% ago</span><span>100%</span></div>
-</div>
-<p class="sec">Evolução diária — Retenção · CSAT · OTIF</p>
-<div class="card"><div class="cw" style="height:260px"><canvas id="c-daily-S1"></canvas></div></div>
-<p class="sec">Retenção e CSAT por motivo</p>
-<div class="g2">
-  <div class="card"><div class="sec-inner">Retenção % por motivo</div><div class="cw"><canvas id="c-ret-S1"></canvas></div></div>
-  <div class="card"><div class="sec-inner">CSAT Tiago por motivo</div><div class="cw"><canvas id="c-csat-S1"></canvas></div></div>
-</div>
-<p class="sec">Volume FIN vs N2 vs Fora por motivo</p>
-<div class="card"><div class="cw" style="height:200px"><canvas id="c-vol-S1"></canvas></div></div>
-<p class="sec">Tabela detalhada</p>
-<div class="card" style="padding:0;overflow:hidden">
-<table class="dt">
-<thead><tr><th>Motivo</th><th class="r">Total</th><th class="r">FIN</th><th class="r">N2</th><th class="r">Retenção</th><th class="r">CSAT</th><th class="c">Status</th></tr></thead>
-<tbody><tr><td><strong>Pagamento</strong></td><td class="r">111</td><td class="r">71</td><td class="r">40</td><td class="r"><span class="pill gr">64%</span></td><td class="r"><span class="pill am">75%</span></td><td class="c"><span class="pill gr">ok</span></td></tr><tr><td><strong>Problemas de Logística</strong></td><td class="r">70</td><td class="r">0</td><td class="r">70</td><td class="r"><span class="pill rd">0%</span></td><td class="r"><span class="pill sl">n/d</span></td><td class="c"><span class="pill rd">bloqueio</span></td></tr><tr><td><strong>Status de entrega</strong></td><td class="r">65</td><td class="r">65</td><td class="r">0</td><td class="r"><span class="pill gr">100%</span></td><td class="r"><span class="pill am">67%</span></td><td class="c"><span class="pill gr">ok</span></td></tr><tr><td><strong>Dados cadastrais</strong></td><td class="r">51</td><td class="r">51</td><td class="r">0</td><td class="r"><span class="pill gr">100%</span></td><td class="r"><span class="pill am">70%</span></td><td class="c"><span class="pill gr">ok</span></td></tr><tr><td><strong>Pedido</strong></td><td class="r">38</td><td class="r">38</td><td class="r">0</td><td class="r"><span class="pill gr">100%</span></td><td class="r"><span class="pill am">67%</span></td><td class="c"><span class="pill gr">ok</span></td></tr><tr><td><strong>Crédito</strong></td><td class="r">18</td><td class="r">18</td><td class="r">0</td><td class="r"><span class="pill gr">100%</span></td><td class="r"><span class="pill am">50%</span></td><td class="c"><span class="pill gr">ok</span></td></tr><tr><td><strong>Dúvidas gerais sobre a Praso</strong></td><td class="r">14</td><td class="r">14</td><td class="r">0</td><td class="r"><span class="pill gr">100%</span></td><td class="r"><span class="pill gr">100%</span></td><td class="c"><span class="pill gr">ok</span></td></tr></tbody>
-</table></div>
-</div>
-<div class="page" id="page-s2-jun">
-<div class="kpi-grid">
-  <div class="kpi-card"><div class="kpi-top" style="background:#16a34a"></div>
-    <div class="kpi-label">Retenção FIN</div>
-    <div class="kpi-value" style="color:#16a34a">65.9%</div>
-    <div class="kpi-sub">302 FIN / 458 total · Meta 60%</div>
-    <div class="kpi-delta" style="color:#16a34a">✓ Meta atingida</div>
+  <p class="sec">Tabela de motivos + subcategorias críticas · S2</p>
+  <div class="card" style="padding:0;overflow:hidden"><table class="dt" id="t-s2"></table></div>
+</section>
+
+<!-- S3 -->
+<section class="week-panel" id="panel-s3">
+  <p class="sec">Semana 3 · 15–20 de junho de 2026</p>
+  <div class="kpi-row kpi-4" id="kpi-s3"></div>
+  <div class="prog-wrap">
+    <div class="prog-head"><div class="prog-head-label">Retenção S3 · meta M0 = 60%</div><div class="prog-head-val" id="prog-val-s3">—</div></div>
+    <div class="prog-track"><div class="prog-fill" id="prog-fill-s3"></div><div class="prog-marker" style="left:75%" data-label="ago 80%"></div></div>
   </div>
-  <div class="kpi-card"><div class="kpi-top" style="background:#d97706"></div>
-    <div class="kpi-label">CSAT Tiago</div>
-    <div class="kpi-value" style="color:#d97706">78.4%</div>
-    <div class="kpi-sub">58/74 avaliações · Meta 80%</div>
-    <div class="kpi-delta" style="color:#d97706">✗ Abaixo 1.6 pp</div>
+  <p class="sec">Análise narrativa — S3</p>
+  <div class="narr n-amber">
+    <h4>🟡 Retenção 50,9% — estável, Terça/Quarta acima de 53%</h4>
+    <p>S3 manteve o patamar da S2 (50,9% vs 51,5%). <strong>17/jun foi o melhor dia</strong>: 118 FIN (29 Pagamento + 24 Pedido + 20 Crédito) com retenção de 54,9%. O Tiago reteve 13 tickets de Crédito (Limite removido/suspenso) e 13 de Pedido (Cancelamento) que antes escalavam. A <strong>sexta 20/jun foi a mais fraca</strong>: apenas 34,1% — 22 tickets Fora do horário e 38 N2 sem FIN suficiente para compensar, o que é padrão de fim de semana com N2 reduzido.</p>
+    <p>O fluxo de cancelamento ativo desde 01/jun começa a mostrar efeito em Pedido/Cancelamento — retenção nesse subcaso subiu de ~85% na S1 para ~100% na S3. Aguarda confirmação com volume maior em julho.</p>
   </div>
-  <div class="kpi-card"><div class="kpi-top" style="background:#1a47b8"></div>
-    <div class="kpi-label">Total Tickets</div>
-    <div class="kpi-value" style="color:#1a47b8">458</div>
-    <div class="kpi-sub">Excl. Comercial · KA · Motoristas</div>
-    <div class="kpi-delta" style="color:#64748b">08–14/jun</div>
+  <div class="narr n-amber">
+    <h4>⚠️ CSAT Tiago 75,0% — abaixo da meta de 80%, queda vs S2</h4>
+    <p>CSAT caiu para 75,0% na S3 (vs 78,6% na S2). O melhor dia do mês foi <strong>11/jun: 90,9%</strong> — único acima da meta. Na S3, apenas <strong>16/jun</strong> ficou próximo (81,8%). A queda nas sextas e nas semanas com alto volume de Crédito e Pagamento sem confirmação arrasta o CSAT para baixo. <strong>Motivo estrutural:</strong> o Tiago encerra o ticket sem confirmar ao cliente que o problema foi resolvido — especialmente em Crédito (limite) e Pagamento (2ª via).</p>
   </div>
-  <div class="kpi-card"><div class="kpi-top" style="background:#1a47b8"></div>
-    <div class="kpi-label">Progressão</div>
-    <div class="kpi-value" style="color:#1a47b8">82%</div>
-    <div class="kpi-sub">rumo à meta de agosto (80%)</div>
-    <div class="kpi-delta" style="color:#64748b">base 60% · teto 80%</div>
+  <p class="sec">Evolução diária — S3</p>
+  <div class="card">
+    <div class="leg">
+      <span class="li"><span class="ld" style="background:var(--blue)"></span>Retenção %</span>
+      <span class="li"><span class="ldash" style="border-color:var(--amber-mid)"></span>CSAT Tiago %</span>
+    </div>
+    <div class="cw cw-md"><canvas id="c-s3-day"></canvas></div>
   </div>
-</div>
-<div class="prog-wrap">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-    <div><div style="font-size:12px;font-weight:600">Progressão rumo à meta</div><div style="font-size:10px;color:#64748b">M0=60% · Meta agosto=80%</div></div>
-    <span style="font-size:22px;font-weight:300;color:#1a47b8">65.9%</span>
+  <div class="g2">
+    <div class="card"><div class="card-title">Volume por time · S3</div><div class="cw cw-sm"><canvas id="c-s3-vol"></canvas></div></div>
+    <div class="card"><div class="card-title">Retenção e CSAT por motivo · S3</div><div class="cw cw-sm"><canvas id="c-s3-mot"></canvas></div></div>
   </div>
-  <div class="prog-track"><div class="prog-fill" style="width:82.4%"></div><div style="position:absolute;left:75%;top:-5px;bottom:-5px;width:2px;background:#d97706"></div></div>
-  <div class="prog-labels"><span>0%</span><span style="color:#16a34a;font-weight:600">60% M0</span><span style="color:#d97706;font-weight:600">80% ago</span><span>100%</span></div>
-</div>
-<p class="sec">Evolução diária — Retenção · CSAT · OTIF</p>
-<div class="card"><div class="cw" style="height:260px"><canvas id="c-daily-S2"></canvas></div></div>
-<p class="sec">Retenção e CSAT por motivo</p>
-<div class="g2">
-  <div class="card"><div class="sec-inner">Retenção % por motivo</div><div class="cw"><canvas id="c-ret-S2"></canvas></div></div>
-  <div class="card"><div class="sec-inner">CSAT Tiago por motivo</div><div class="cw"><canvas id="c-csat-S2"></canvas></div></div>
-</div>
-<p class="sec">Volume FIN vs N2 vs Fora por motivo</p>
-<div class="card"><div class="cw" style="height:200px"><canvas id="c-vol-S2"></canvas></div></div>
-<p class="sec">Tabela detalhada</p>
-<div class="card" style="padding:0;overflow:hidden">
-<table class="dt">
-<thead><tr><th>Motivo</th><th class="r">Total</th><th class="r">FIN</th><th class="r">N2</th><th class="r">Retenção</th><th class="r">CSAT</th><th class="c">Status</th></tr></thead>
-<tbody><tr><td><strong>Pagamento</strong></td><td class="r">163</td><td class="r">102</td><td class="r">61</td><td class="r"><span class="pill gr">63%</span></td><td class="r"><span class="pill gr">80%</span></td><td class="c"><span class="pill gr">ok</span></td></tr><tr><td><strong>Status de entrega</strong></td><td class="r">96</td><td class="r">96</td><td class="r">0</td><td class="r"><span class="pill gr">100%</span></td><td class="r"><span class="pill am">78%</span></td><td class="c"><span class="pill gr">ok</span></td></tr><tr><td><strong>Problemas de Logística</strong></td><td class="r">95</td><td class="r">0</td><td class="r">95</td><td class="r"><span class="pill rd">0%</span></td><td class="r"><span class="pill sl">n/d</span></td><td class="c"><span class="pill rd">bloqueio</span></td></tr><tr><td><strong>Dados cadastrais</strong></td><td class="r">72</td><td class="r">72</td><td class="r">0</td><td class="r"><span class="pill gr">100%</span></td><td class="r"><span class="pill am">72%</span></td><td class="c"><span class="pill gr">ok</span></td></tr><tr><td><strong>Pedido</strong></td><td class="r">13</td><td class="r">13</td><td class="r">0</td><td class="r"><span class="pill gr">100%</span></td><td class="r"><span class="pill am">67%</span></td><td class="c"><span class="pill gr">ok</span></td></tr><tr><td><strong>Dúvidas gerais sobre a Praso</strong></td><td class="r">10</td><td class="r">10</td><td class="r">0</td><td class="r"><span class="pill gr">100%</span></td><td class="r"><span class="pill gr">100%</span></td><td class="c"><span class="pill gr">ok</span></td></tr><tr><td><strong>Crédito</strong></td><td class="r">9</td><td class="r">9</td><td class="r">0</td><td class="r"><span class="pill gr">100%</span></td><td class="r"><span class="pill gr">100%</span></td><td class="c"><span class="pill gr">ok</span></td></tr></tbody>
-</table></div>
-</div>
-<div class="page" id="page-s3-jun">
-<div class="kpi-grid">
-  <div class="kpi-card"><div class="kpi-top" style="background:#16a34a"></div>
-    <div class="kpi-label">Retenção FIN</div>
-    <div class="kpi-value" style="color:#16a34a">64.5%</div>
-    <div class="kpi-sub">278 FIN / 431 total · Meta 60%</div>
-    <div class="kpi-delta" style="color:#16a34a">✓ Meta atingida</div>
-  </div>
-  <div class="kpi-card"><div class="kpi-top" style="background:#d97706"></div>
-    <div class="kpi-label">CSAT Tiago</div>
-    <div class="kpi-value" style="color:#d97706">76.1%</div>
-    <div class="kpi-sub">54/71 avaliações · Meta 80%</div>
-    <div class="kpi-delta" style="color:#d97706">✗ Abaixo 3.9 pp</div>
-  </div>
-  <div class="kpi-card"><div class="kpi-top" style="background:#1a47b8"></div>
-    <div class="kpi-label">Total Tickets</div>
-    <div class="kpi-value" style="color:#1a47b8">431</div>
-    <div class="kpi-sub">Excl. Comercial · KA · Motoristas</div>
-    <div class="kpi-delta" style="color:#64748b">15–21/jun</div>
-  </div>
-  <div class="kpi-card"><div class="kpi-top" style="background:#1a47b8"></div>
-    <div class="kpi-label">Progressão</div>
-    <div class="kpi-value" style="color:#1a47b8">81%</div>
-    <div class="kpi-sub">rumo à meta de agosto (80%)</div>
-    <div class="kpi-delta" style="color:#64748b">base 60% · teto 80%</div>
-  </div>
-</div>
-<div class="prog-wrap">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-    <div><div style="font-size:12px;font-weight:600">Progressão rumo à meta</div><div style="font-size:10px;color:#64748b">M0=60% · Meta agosto=80%</div></div>
-    <span style="font-size:22px;font-weight:300;color:#1a47b8">64.5%</span>
-  </div>
-  <div class="prog-track"><div class="prog-fill" style="width:80.6%"></div><div style="position:absolute;left:75%;top:-5px;bottom:-5px;width:2px;background:#d97706"></div></div>
-  <div class="prog-labels"><span>0%</span><span style="color:#16a34a;font-weight:600">60% M0</span><span style="color:#d97706;font-weight:600">80% ago</span><span>100%</span></div>
-</div>
-<p class="sec">Evolução diária — Retenção · CSAT · OTIF</p>
-<div class="card"><div class="cw" style="height:260px"><canvas id="c-daily-S3"></canvas></div></div>
-<p class="sec">Retenção e CSAT por motivo</p>
-<div class="g2">
-  <div class="card"><div class="sec-inner">Retenção % por motivo</div><div class="cw"><canvas id="c-ret-S3"></canvas></div></div>
-  <div class="card"><div class="sec-inner">CSAT Tiago por motivo</div><div class="cw"><canvas id="c-csat-S3"></canvas></div></div>
-</div>
-<p class="sec">Volume FIN vs N2 vs Fora por motivo</p>
-<div class="card"><div class="cw" style="height:200px"><canvas id="c-vol-S3"></canvas></div></div>
-<p class="sec">Tabela detalhada</p>
-<div class="card" style="padding:0;overflow:hidden">
-<table class="dt">
-<thead><tr><th>Motivo</th><th class="r">Total</th><th class="r">FIN</th><th class="r">N2</th><th class="r">Retenção</th><th class="r">CSAT</th><th class="c">Status</th></tr></thead>
-<tbody><tr><td><strong>Pagamento</strong></td><td class="r">159</td><td class="r">98</td><td class="r">58</td><td class="r"><span class="pill gr">62%</span></td><td class="r"><span class="pill am">78%</span></td><td class="c"><span class="pill gr">ok</span></td></tr><tr><td><strong>Problemas de Logística</strong></td><td class="r">88</td><td class="r">0</td><td class="r">88</td><td class="r"><span class="pill rd">0%</span></td><td class="r"><span class="pill sl">n/d</span></td><td class="c"><span class="pill rd">bloqueio</span></td></tr><tr><td><strong>Status de entrega</strong></td><td class="r">87</td><td class="r">83</td><td class="r">0</td><td class="r"><span class="pill gr">95%</span></td><td class="r"><span class="pill am">78%</span></td><td class="c"><span class="pill gr">ok</span></td></tr><tr><td><strong>Dados cadastrais</strong></td><td class="r">65</td><td class="r">65</td><td class="r">0</td><td class="r"><span class="pill gr">100%</span></td><td class="r"><span class="pill am">71%</span></td><td class="c"><span class="pill gr">ok</span></td></tr><tr><td><strong>Pedido</strong></td><td class="r">18</td><td class="r">18</td><td class="r">0</td><td class="r"><span class="pill gr">100%</span></td><td class="r"><span class="pill am">67%</span></td><td class="c"><span class="pill gr">ok</span></td></tr><tr><td><strong>Crédito</strong></td><td class="r">14</td><td class="r">14</td><td class="r">0</td><td class="r"><span class="pill gr">100%</span></td><td class="r"><span class="pill am">75%</span></td><td class="c"><span class="pill gr">ok</span></td></tr></tbody>
-</table></div>
-</div>
-<div class="page" id="page-s4-jun">
-<div class="kpi-grid">
-  <div class="kpi-card"><div class="kpi-top" style="background:#16a34a"></div>
-    <div class="kpi-label">Retenção FIN</div>
-    <div class="kpi-value" style="color:#16a34a">64.9%</div>
-    <div class="kpi-sub">362 FIN / 558 total · Meta 60%</div>
-    <div class="kpi-delta" style="color:#16a34a">✓ Meta atingida</div>
-  </div>
-  <div class="kpi-card"><div class="kpi-top" style="background:#16a34a"></div>
-    <div class="kpi-label">CSAT Tiago</div>
-    <div class="kpi-value" style="color:#16a34a">86.9%</div>
-    <div class="kpi-sub">53/61 avaliações · Meta 80%</div>
-    <div class="kpi-delta" style="color:#16a34a">✓ Meta atingida</div>
-  </div>
-  <div class="kpi-card"><div class="kpi-top" style="background:#1a47b8"></div>
-    <div class="kpi-label">Total Tickets</div>
-    <div class="kpi-value" style="color:#1a47b8">558</div>
-    <div class="kpi-sub">Excl. Comercial · KA · Motoristas</div>
-    <div class="kpi-delta" style="color:#64748b">22–28/jun</div>
-  </div>
-  <div class="kpi-card"><div class="kpi-top" style="background:#1a47b8"></div>
-    <div class="kpi-label">Progressão</div>
-    <div class="kpi-value" style="color:#1a47b8">81%</div>
-    <div class="kpi-sub">rumo à meta de agosto (80%)</div>
-    <div class="kpi-delta" style="color:#64748b">base 60% · teto 80%</div>
-  </div>
-</div>
-<div class="prog-wrap">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-    <div><div style="font-size:12px;font-weight:600">Progressão rumo à meta</div><div style="font-size:10px;color:#64748b">M0=60% · Meta agosto=80%</div></div>
-    <span style="font-size:22px;font-weight:300;color:#1a47b8">64.9%</span>
-  </div>
-  <div class="prog-track"><div class="prog-fill" style="width:81.1%"></div><div style="position:absolute;left:75%;top:-5px;bottom:-5px;width:2px;background:#d97706"></div></div>
-  <div class="prog-labels"><span>0%</span><span style="color:#16a34a;font-weight:600">60% M0</span><span style="color:#d97706;font-weight:600">80% ago</span><span>100%</span></div>
-</div>
-<p class="sec">Evolução diária — Retenção · CSAT · OTIF</p>
-<div class="card"><div class="cw" style="height:260px"><canvas id="c-daily-S4"></canvas></div></div>
-<p class="sec">Retenção e CSAT por motivo</p>
-<div class="g2">
-  <div class="card"><div class="sec-inner">Retenção % por motivo</div><div class="cw"><canvas id="c-ret-S4"></canvas></div></div>
-  <div class="card"><div class="sec-inner">CSAT Tiago por motivo</div><div class="cw"><canvas id="c-csat-S4"></canvas></div></div>
-</div>
-<p class="sec">Volume FIN vs N2 vs Fora por motivo</p>
-<div class="card"><div class="cw" style="height:200px"><canvas id="c-vol-S4"></canvas></div></div>
-<p class="sec">Tabela detalhada</p>
-<div class="card" style="padding:0;overflow:hidden">
-<table class="dt">
-<thead><tr><th>Motivo</th><th class="r">Total</th><th class="r">FIN</th><th class="r">N2</th><th class="r">Retenção</th><th class="r">CSAT</th><th class="c">Status</th></tr></thead>
-<tbody><tr><td><strong>Pagamento</strong></td><td class="r">119</td><td class="r">81</td><td class="r">38</td><td class="r"><span class="pill gr">68%</span></td><td class="r"><span class="pill gr">88%</span></td><td class="c"><span class="pill gr">ok</span></td></tr><tr><td><strong>Status de entrega</strong></td><td class="r">116</td><td class="r">76</td><td class="r">40</td><td class="r"><span class="pill gr">66%</span></td><td class="r"><span class="pill gr">81%</span></td><td class="c"><span class="pill gr">ok</span></td></tr><tr><td><strong>Problemas de Logística</strong></td><td class="r">111</td><td class="r">0</td><td class="r">111</td><td class="r"><span class="pill rd">0%</span></td><td class="r"><span class="pill sl">n/d</span></td><td class="c"><span class="pill rd">bloqueio</span></td></tr><tr><td><strong>Dúvidas gerais sobre a Praso</strong></td><td class="r">46</td><td class="r">46</td><td class="r">0</td><td class="r"><span class="pill gr">100%</span></td><td class="r"><span class="pill gr">100%</span></td><td class="c"><span class="pill gr">ok</span></td></tr><tr><td><strong>Crédito</strong></td><td class="r">46</td><td class="r">46</td><td class="r">0</td><td class="r"><span class="pill gr">100%</span></td><td class="r"><span class="pill gr">100%</span></td><td class="c"><span class="pill gr">ok</span></td></tr><tr><td><strong>Pedido</strong></td><td class="r">43</td><td class="r">36</td><td class="r">7</td><td class="r"><span class="pill gr">84%</span></td><td class="r"><span class="pill gr">100%</span></td><td class="c"><span class="pill gr">ok</span></td></tr><tr><td><strong>Dados cadastrais</strong></td><td class="r">40</td><td class="r">40</td><td class="r">0</td><td class="r"><span class="pill gr">100%</span></td><td class="r"><span class="pill gr">86%</span></td><td class="c"><span class="pill gr">ok</span></td></tr><tr><td><strong>Problemas técnicos com o app</strong></td><td class="r">37</td><td class="r">37</td><td class="r">0</td><td class="r"><span class="pill gr">100%</span></td><td class="r"><span class="pill am">60%</span></td><td class="c"><span class="pill gr">ok</span></td></tr></tbody>
-</table></div>
-</div>
+  <p class="sec">Tabela de motivos + subcategorias críticas · S3</p>
+  <div class="card" style="padding:0;overflow:hidden"><table class="dt" id="t-s3"></table></div>
+</section>
 
 <!-- ROADMAP -->
-<div class="page" id="page-roadmap-jun">
-  <p class="sec">Roadmap de Ações · Tiago IA · Julho–Agosto 2026</p>
-
-  <div class="rm-card">
-    <div class="rm-head">
-      <div><span class="rm-pri rd">🔴 Crítico</span></div>
-      <div><div class="rm-title">Integração API Credix — geração de boleto no Tiago</div>
-      <div class="rm-desc">A API Credix falha na geração de boleto/link de pagamento, forçando transbordo desnecessário para o N2. São 365+ tickets de Pagamento/quinzena com apenas 41% de retenção por esta causa. O Tiago executa o fluxo corretamente — a falha é técnica, não de atendimento.</div></div>
-      <div><span class="pill rd">Aberto</span></div>
-    </div>
-    <div class="rm-impact"><strong>Impacto estimado:</strong> +7pp na retenção FIN (de ~51% para ~58%) · +10pp no CSAT do Tiago (de ~77% para ~87%) · Resolve o único KPI que piorou em Junho.</div>
+<section class="week-panel" id="panel-roadmap">
+  <p class="sec">Roadmap Tiago IA — 2º Ciclo 2026</p>
+  <div class="kpi-row kpi-3">
+    <div class="kpi-card k-green"><p class="kpi-label">Entregas concluídas</p><p class="kpi-value kv-green">8</p><p class="kpi-sub">maio 2026 — CS, Tech e OPS</p></div>
+    <div class="kpi-card k-amber"><p class="kpi-label">Em acompanhamento</p><p class="kpi-value kv-amber">1</p><p class="kpi-sub">Fluxo cancelamento · junho</p></div>
+    <div class="kpi-card k-red"><p class="kpi-label">Pendentes críticos</p><p class="kpi-value kv-red">2</p><p class="kpi-sub">PRS API · Credix estabilização</p></div>
   </div>
-
-  <div class="rm-card">
-    <div class="rm-head">
-      <div><span class="rm-pri rd">🔴 Crítico</span></div>
-      <div><div class="rm-title">Esteira dedicada para KA e Comercial</div>
-      <div class="rm-desc">535 tickets internos/quinzena (~22% do total N2) ainda chegam pela fila do cliente final. Demandas transacionais de KA e Comercial (cancelamentos, boletos, status) ocupam o N2 que deveria focar em retenção e CSAT do cliente final.</div></div>
-      <div><span class="pill rd">Aberto</span></div>
-    </div>
-    <div class="rm-impact"><strong>Impacto estimado:</strong> Libera 22% da capacidade N2 · Reduz HE de Elizama e Janine · Protege a fila do cliente final.</div>
+  <div class="narr n-purple">
+    <h4>Como as entregas de maio explicam o resultado de junho</h4>
+    <p>O roadmap de maio construiu a <strong>infraestrutura de qualidade</strong> que o Tiago precisava para sustentar crescimento em junho. Entregas de CS (linguagem, atributos, horários, CX Score) elevaram a capacidade de resolução autônoma em motivos de baixa complexidade. Entregas de Tech (Procedure de postergação, connector de base) eliminaram escalações técnicas desnecessárias. O resultado: junho iniciou com um bot estruturalmente mais capaz — e a progressão de 47,3% → 51,5% entre S1 e S2 é a evidência direta disso. O <strong>próximo salto estrutural exige integração PRS</strong> para Logística e estabilização Credix para Boleto.</p>
   </div>
-
-  <div class="rm-card">
-    <div class="rm-head">
-      <div><span class="rm-pri am">🟡 Alta</span></div>
-      <div><div class="rm-title">Canal direto com Credix para incidentes</div>
-      <div class="rm-desc">Sem canal de escalonamento direto, incidentes Credix geram TRT P90 de 6h+ em Elizama (25 tickets sem resolução interna no incidente de Maio). O evento se repete sem SLA formal de resposta do parceiro.</div></div>
-      <div><span class="pill am">Em andamento</span></div>
+  <p class="sec">Impacto estimado das entregas em pp de retenção</p>
+  <div class="card"><div class="cw" style="height:220px"><canvas id="c-rdm-impact"></canvas></div></div>
+  <p class="sec">Linha do tempo — Maio 2026 (concluídas)</p>
+  <div class="card">
+    <div style="display:flex;gap:16px;margin-bottom:18px;flex-wrap:wrap">
+      <span class="li"><span class="ld" style="background:var(--blue)"></span>CS</span>
+      <span class="li"><span class="ld" style="background:var(--green-mid)"></span>Tech</span>
+      <span class="li"><span class="ld" style="background:var(--amber-mid)"></span>CS + Tech</span>
+      <span class="li"><span class="ld" style="background:var(--purple-mid)"></span>OPS</span>
     </div>
-    <div class="rm-impact"><strong>Impacto estimado:</strong> Elimina spike de TRT por incidente externo · TRT de Elizama seria 1,5h menor sem o incidente S3/Mai.</div>
-  </div>
-
-  <div class="rm-card">
-    <div class="rm-head">
-      <div><span class="rm-pri am">🟡 Alta</span></div>
-      <div><div class="rm-title">Expansão de escopo — fluxo de Avaria de produto</div>
-      <div class="rm-desc">Avaria de produto tem 3,7% de retenção atual (irresolvível sem foto/evidência). Criar fluxo de coleta de evidência via Tiago permitiria iniciar o processo sem transbordo imediato, reduzindo o TRT total do caso.</div></div>
-      <div><span class="pill sl">Planejado</span></div>
+    <div class="tl">
+      <div class="tl-item"><span class="tl-dot cs"></span><p class="tl-date">Mai · D1–D5</p><p class="tl-title">Mapear variações "quero humano" + Mensagens de horário</p><p class="tl-desc">Lista de gatilhos de escalação manual e mensagens aprovadas para fora do horário.</p><div class="tl-tags"><span class="ti-ret">↑ retenção</span></div></div>
+      <div class="tl-item"><span class="tl-dot cs"></span><p class="tl-date">Mai · D1–D7</p><p class="tl-title">Ativar regras de horário (Nova Orientação A)</p><p class="tl-desc">Janelas seg–sex 08h–19h30 / sáb 09h–17h / dom fechado. Reduz tickets mal roteados.</p><div class="tl-tags"><span class="ti-ret">↑ retenção</span><span class="ti-csat">↑ CSAT</span></div></div>
+      <div class="tl-item"><span class="tl-dot cs"></span><p class="tl-date">Mai · D3–D12</p><p class="tl-title">Ajustar linguagem conforme CX Score · Novos atributos do Tiago</p><p class="tl-desc">Linguagem aprovada com base nos piores CX Score. Tiago passa a registrar atributos igual ao N2.</p><div class="tl-tags"><span class="ti-both">↑ retenção + CSAT</span></div></div>
+      <div class="tl-item"><span class="tl-dot tech"></span><p class="tl-date">Mai · D3–D12</p><p class="tl-title">Alterar orientação "falar com atendente" — transbordo após 3ª mensagem</p><p class="tl-desc">Elimina loops de incompreensão. Tiago tenta resolver 3 vezes antes de transferir.</p><div class="tl-tags"><span class="ti-csat">↑ CSAT</span></div></div>
+      <div class="tl-item"><span class="tl-dot tech"></span><p class="tl-date">Mai · D10–D15</p><p class="tl-title">Procedure de postergação — base real conectada</p><p class="tl-desc">Base de pedidos postergados via HTTP GET connector. Tiago consulta e informa nova data sem escalar.</p><div class="tl-tags"><span class="ti-ret">↑ retenção</span></div></div>
+      <div class="tl-item"><span class="tl-dot cs"></span><p class="tl-date">Mai · D15–D20</p><p class="tl-title">Regra de inativação · CX Score diário monitorado</p><p class="tl-desc">Tickets de inativação classificados corretamente. Dashboard com 10 piores CX Score para acompanhamento diário.</p><div class="tl-tags"><span class="ti-csat">↑ CSAT</span></div></div>
+      <div class="tl-item"><span class="tl-dot both"></span><p class="tl-date">Mai · D15–D25</p><p class="tl-title">Orientação D — Cobrança incorreta / Valor diferente na NF</p><p class="tl-desc">Tiago valida se é leitura da NF antes de escalar. Reduz escalações desnecessárias de pagamento.</p><div class="tl-tags"><span class="ti-ret">↑ retenção</span></div></div>
+      <div class="tl-item"><span class="tl-dot ops"></span><p class="tl-date">Mai · D20–D29</p><p class="tl-title">Tiago registrar motivo após encerramento · Dash de acompanhamento</p><p class="tl-desc">100% dos tickets encerrados com motivo registrado. Painel de indicadores para operação diária.</p><div class="tl-tags"><span class="ti-both">↑ dados + qualidade</span></div></div>
     </div>
-    <div class="rm-impact"><strong>Impacto estimado:</strong> Redução de 30–40% no TRT de Avaria · Melhora na percepção de agilidade do cliente.</div>
   </div>
-
-  <div class="rm-card">
-    <div class="rm-head">
-      <div><span class="rm-pri gr">✅ Concluído</span></div>
-      <div><div class="rm-title">Encerramento do Tiago às 19h31</div>
-      <div class="rm-desc">Eliminação da fila noturna acumulada que chegava para Layla e Júllia às 08h. Implementado na Semana 2 de Maio.</div></div>
-      <div><span class="pill gr">Entregue</span></div>
+  <p class="sec">Junho 2026 — Em andamento</p>
+  <div class="card">
+    <div class="tl">
+      <div class="tl-item"><span class="tl-dot active"></span><p class="tl-date">Jun · D1 em diante <span class="pill p-amber" style="margin-left:4px">acompanhando resultado</span></p><p class="tl-title">Fluxo de cancelamento — Tiago cancela pedido antes de faturado</p><p class="tl-desc">Impacto já visível em S3: retenção em Pedido/Cancelamento subiu para ~100%. Confirmação com volume maior esperada em julho.</p><div class="tl-tags"><span class="ti-ret">↑ retenção</span></div></div>
     </div>
-    <div class="rm-impact"><strong>Resultado:</strong> Tickets fora do horário N2: −80% · CSAT Layla: 75% → 100% (S4/Mai) · N2/dia: 218 → 89 (−59%).</div>
   </div>
-
-  <div class="rm-card">
-    <div class="rm-head">
-      <div><span class="rm-pri gr">✅ Concluído</span></div>
-      <div><div class="rm-title">Granularidade de motivos (tipificação)</div>
-      <div class="rm-desc">Expansão de 53 para 55+ motivos únicos com zero campos em branco. Revelou que 78% do "Atraso na entrega" de MaiS1 era fila noturna, não atendimento real.</div></div>
-      <div><span class="pill gr">Entregue</span></div>
-    </div>
-    <div class="rm-impact"><strong>Resultado:</strong> Base de dados limpa para calibração de metas Jul/Ago · Roteamento mais preciso no Tiago.</div>
+  <p class="sec">Pendentes estruturais — maior impacto potencial</p>
+  <div class="card" style="padding:0;overflow:hidden">
+    <table class="dt">
+      <thead><tr><th>Bloqueador</th><th>Subcasos afetados</th><th>Impacto est.</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td><strong>PRS API — consulta de pedido</strong></td><td>Falta de item, Inversão de produto, Status atraso</td><td style="color:var(--green-mid);font-weight:600">+11–14 pp</td><td><span class="pill p-red">⏳ Pendente</span></td></tr>
+        <tr><td><strong>Credix API — estabilização boleto</strong></td><td>2ª via boleto, boleto em atraso, cobrança indevida</td><td style="color:var(--amber-mid);font-weight:600">+3–5 pp</td><td><span class="pill p-red">⏳ Pendente</span></td></tr>
+        <tr><td><strong>Revisão encerramento Crédito</strong></td><td>Limite removido, consulta limite</td><td style="color:var(--amber-mid);font-weight:600">+5–10 pp CSAT</td><td><span class="pill p-amber">Priorizar</span></td></tr>
+      </tbody>
+    </table>
   </div>
-</div>
+</section>
 
-<!-- JULHO PÁGINAS -->
-<div class="page" id="page-s1jul-jul">
+</main>
+
+
+<div id="main-julho" style="display:none">
+<section class="week-panel active" id="panel-jul">
   <p class="sec">Julho 2026 · S1 · 29/jun–04/jul · Fonte: Metabase · Excluídos: Comercial, KA, Motoristas</p>
-  
-<div class="kpi-grid">
-  <div class="kpi-card"><div class="kpi-top" style="background:#16a34a"></div>
-    <div class="kpi-label">Retenção FIN</div>
-    <div class="kpi-value" style="color:#16a34a">68.8%</div>
-    <div class="kpi-sub">368 FIN / 535 total · Meta 60%</div>
-    <div class="kpi-delta" style="color:#16a34a">✓ Meta atingida</div>
+  <div class="kpi-row kpi-4" id="kpi-jul"></div>
+  <div class="prog-wrap">
+    <div class="prog-head"><div class="prog-head-label">Retenção Jul S1 · meta M0 = 60%</div><div class="prog-head-val" id="prog-val-jul">—</div></div>
+    <div class="prog-track"><div class="prog-fill" id="prog-fill-jul"></div><div class="prog-marker" style="left:75%" data-label="ago 80%"></div></div>
   </div>
-  <div class="kpi-card"><div class="kpi-top" style="background:#d97706"></div>
-    <div class="kpi-label">CSAT Tiago</div>
-    <div class="kpi-value" style="color:#d97706">67.2%</div>
-    <div class="kpi-sub">43/64 avaliações · Meta 80%</div>
-    <div class="kpi-delta" style="color:#d97706">✗ Abaixo 12.8 pp</div>
+  <div class="narr n-green">
+    <h4>🎯 Retenção 62,1% — primeira semana acima da meta de 60% no ciclo!</h4>
+    <p>Julho S1 (29/jun–04/jul) entrega a primeira retenção acima da meta M0 de 60%: <strong>62,1%</strong> (239 FIN / 385 total). O melhor dia foi <strong>01/jul (79,7%)</strong> — quase batendo a meta de agosto (80%). Problemas de Logística continua como principal bloqueio (12+ tickets N2 em vários dias), mas o mix favorável de Crédito, Dados Cadastrais e Problemas Técnicos com alta retenção sustenta o indicador.</p>
+    <p>CSAT Tiago em <strong>75,0%</strong> — abaixo da meta de 80%. Detratores concentrados em Pagamento e Status de entrega sem confirmação de resolução.</p>
   </div>
-  <div class="kpi-card"><div class="kpi-top" style="background:#1a47b8"></div>
-    <div class="kpi-label">Total Tickets</div>
-    <div class="kpi-value" style="color:#1a47b8">535</div>
-    <div class="kpi-sub">Excl. Comercial · KA · Motoristas</div>
-    <div class="kpi-delta" style="color:#64748b">29/jun–04/jul</div>
+  <p class="sec">Evolução diária — Julho S1</p>
+  <div class="g2">
+    <div class="card"><div class="card-title">Retenção e CSAT por dia</div><div class="cw cw-md"><canvas id="c-jul-tl"></canvas></div></div>
+    <div class="card"><div class="card-title">Volume FIN vs N2 vs Fora</div><div class="cw cw-md"><canvas id="c-jul-vol"></canvas></div></div>
   </div>
-  <div class="kpi-card"><div class="kpi-top" style="background:#1a47b8"></div>
-    <div class="kpi-label">Progressão</div>
-    <div class="kpi-value" style="color:#1a47b8">86%</div>
-    <div class="kpi-sub">rumo à meta de agosto (80%)</div>
-    <div class="kpi-delta" style="color:#64748b">base 60% · teto 80%</div>
-  </div>
+  <p class="sec">Retenção por motivo — Julho S1</p>
+  <div class="card"><div class="cw cw-md"><canvas id="c-jul-mot"></canvas></div></div>
+  <p class="sec">Tabela de motivos — Julho S1</p>
+  <div class="card" style="padding:0;overflow:hidden"><table class="dt" id="t-jul"></table></div>
+</section>
 </div>
-<div class="prog-wrap">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-    <div><div style="font-size:12px;font-weight:600">Progressão rumo à meta</div><div style="font-size:10px;color:#64748b">M0=60% · Meta agosto=80%</div></div>
-    <span style="font-size:22px;font-weight:300;color:#1a47b8">68.8%</span>
-  </div>
-  <div class="prog-track"><div class="prog-fill" style="width:86.0%"></div><div style="position:absolute;left:75%;top:-5px;bottom:-5px;width:2px;background:#d97706"></div></div>
-  <div class="prog-labels"><span>0%</span><span style="color:#16a34a;font-weight:600">60% M0</span><span style="color:#d97706;font-weight:600">80% ago</span><span>100%</span></div>
-</div>
-<p class="sec">Evolução diária — Retenção · CSAT · OTIF</p>
-<div class="card"><div class="cw" style="height:260px"><canvas id="c-daily-S1JUL"></canvas></div></div>
-<p class="sec">Retenção e CSAT por motivo</p>
-<div class="g2">
-  <div class="card"><div class="sec-inner">Retenção % por motivo</div><div class="cw"><canvas id="c-ret-S1JUL"></canvas></div></div>
-  <div class="card"><div class="sec-inner">CSAT Tiago por motivo</div><div class="cw"><canvas id="c-csat-S1JUL"></canvas></div></div>
-</div>
-<p class="sec">Volume FIN vs N2 vs Fora por motivo</p>
-<div class="card"><div class="cw" style="height:200px"><canvas id="c-vol-S1JUL"></canvas></div></div>
-<p class="sec">Tabela detalhada</p>
-<div class="card" style="padding:0;overflow:hidden">
-<table class="dt">
-<thead><tr><th>Motivo</th><th class="r">Total</th><th class="r">FIN</th><th class="r">N2</th><th class="r">Retenção</th><th class="r">CSAT</th><th class="c">Status</th></tr></thead>
-<tbody><tr><td><strong>Pagamento</strong></td><td class="r">131</td><td class="r">79</td><td class="r">52</td><td class="r"><span class="pill gr">60%</span></td><td class="r"><span class="pill am">74%</span></td><td class="c"><span class="pill gr">ok</span></td></tr><tr><td><strong>Problemas de Logística</strong></td><td class="r">92</td><td class="r">0</td><td class="r">92</td><td class="r"><span class="pill rd">0%</span></td><td class="r"><span class="pill sl">n/d</span></td><td class="c"><span class="pill rd">bloqueio</span></td></tr><tr><td><strong>Status de entrega</strong></td><td class="r">87</td><td class="r">71</td><td class="r">16</td><td class="r"><span class="pill gr">82%</span></td><td class="r"><span class="pill am">57%</span></td><td class="c"><span class="pill gr">ok</span></td></tr><tr><td><strong>Dados cadastrais</strong></td><td class="r">60</td><td class="r">60</td><td class="r">0</td><td class="r"><span class="pill gr">100%</span></td><td class="r"><span class="pill am">46%</span></td><td class="c"><span class="pill gr">ok</span></td></tr><tr><td><strong>Problemas técnicos com o app</strong></td><td class="r">52</td><td class="r">52</td><td class="r">0</td><td class="r"><span class="pill gr">100%</span></td><td class="r"><span class="pill am">67%</span></td><td class="c"><span class="pill gr">ok</span></td></tr><tr><td><strong>Pedido</strong></td><td class="r">48</td><td class="r">48</td><td class="r">0</td><td class="r"><span class="pill gr">100%</span></td><td class="r"><span class="pill gr">88%</span></td><td class="c"><span class="pill gr">ok</span></td></tr><tr><td><strong>Crédito</strong></td><td class="r">35</td><td class="r">35</td><td class="r">0</td><td class="r"><span class="pill gr">100%</span></td><td class="r"><span class="pill am">67%</span></td><td class="c"><span class="pill gr">ok</span></td></tr><tr><td><strong>Dúvidas gerais sobre a Praso</strong></td><td class="r">23</td><td class="r">23</td><td class="r">0</td><td class="r"><span class="pill gr">100%</span></td><td class="r"><span class="pill gr">100%</span></td><td class="c"><span class="pill gr">ok</span></td></tr><tr><td><strong>Avaria de produto</strong></td><td class="r">7</td><td class="r">0</td><td class="r">7</td><td class="r"><span class="pill rd">0%</span></td><td class="r"><span class="pill sl">n/d</span></td><td class="c"><span class="pill rd">bloqueio</span></td></tr></tbody>
-</table></div>
 
-</div>
+<div id="ph-agosto" style="display:none;padding:80px 32px;text-align:center"><p style="font-size:13px;color:var(--slate-400)">Agosto 2026 · dados disponíveis a partir de 01/08</p></div>
 
 <script>
-const BLU="#1a47b8",AMB="#d97706",GRN="#16a34a",RED="#dc2626",SL="#94a3b8",ORA="#f97316";
+/* ════ DADOS ════ */
+const RAW=[
+{"dia":"2026-06-01","time":"N2","macromotivo":"Problemas de Logística","subcategoria":"Falta de item","tickets":7,"fin":0,"csat_pos":1,"csat_total":1},
+{"dia":"2026-06-01","time":"N2","macromotivo":"Problemas de Logística","subcategoria":"Inversão de produto","tickets":6,"fin":0,"csat_pos":2,"csat_total":2},
+{"dia":"2026-06-01","time":"N2","macromotivo":"Pagamento","subcategoria":"Solicitação de 2ª via","tickets":10,"fin":0,"csat_pos":4,"csat_total":4},
+{"dia":"2026-06-01","time":"N2","macromotivo":"Boleto","subcategoria":"Solicitação de 2ª via","tickets":11,"fin":0,"csat_pos":4,"csat_total":5},
+{"dia":"2026-06-01","time":"Fin","macromotivo":"Pedido","subcategoria":"Cancelamento de pedido","tickets":7,"fin":7,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-01","time":"Fin","macromotivo":"Status de entrega","subcategoria":"Confirmação de status","tickets":3,"fin":3,"csat_pos":1,"csat_total":1},
+{"dia":"2026-06-01","time":"Fin","macromotivo":"Dúvidas gerais sobre a Praso","subcategoria":"Como fazer pedido","tickets":4,"fin":4,"csat_pos":1,"csat_total":1},
+{"dia":"2026-06-01","time":"Fin","macromotivo":"Dados cadastrais","subcategoria":"Validação de CNPJ","tickets":3,"fin":3,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-01","time":"Fin","macromotivo":"Pagamento","subcategoria":"Solicitação de 2ª via","tickets":1,"fin":1,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-01","time":"Fin","macromotivo":"Crédito","subcategoria":"Aumento de limite","tickets":2,"fin":2,"csat_pos":1,"csat_total":1},
+{"dia":"2026-06-01","time":"N2","macromotivo":"Crédito","subcategoria":"Limite removido / suspenso","tickets":3,"fin":0,"csat_pos":1,"csat_total":1},
+{"dia":"2026-06-01","time":"N2","macromotivo":"Avaria de produto","subcategoria":"Produto fora de padrão","tickets":2,"fin":0,"csat_pos":1,"csat_total":1},
+{"dia":"2026-06-01","time":"Fora do horário","macromotivo":"Pagamento","subcategoria":"Fora do horário","tickets":4,"fin":0,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-02","time":"N2","macromotivo":"Problemas de Logística","subcategoria":"Falta de item","tickets":20,"fin":0,"csat_pos":8,"csat_total":9},
+{"dia":"2026-06-02","time":"N2","macromotivo":"Problemas de Logística","subcategoria":"Inversão de produto","tickets":7,"fin":0,"csat_pos":3,"csat_total":3},
+{"dia":"2026-06-02","time":"N2","macromotivo":"Pagamento","subcategoria":"Solicitação de 2ª via","tickets":11,"fin":0,"csat_pos":5,"csat_total":5},
+{"dia":"2026-06-02","time":"Fin","macromotivo":"Status de entrega","subcategoria":"Confirmação de status","tickets":15,"fin":15,"csat_pos":1,"csat_total":2},
+{"dia":"2026-06-02","time":"Fin","macromotivo":"Motivo não identificado","subcategoria":null,"tickets":8,"fin":8,"csat_pos":0,"csat_total":1},
+{"dia":"2026-06-02","time":"N2","macromotivo":"Pedido","subcategoria":"Cancelamento de pedido","tickets":9,"fin":0,"csat_pos":2,"csat_total":3},
+{"dia":"2026-06-02","time":"Fin","macromotivo":"Pedido","subcategoria":"Cancelamento de pedido","tickets":6,"fin":6,"csat_pos":2,"csat_total":2},
+{"dia":"2026-06-02","time":"Fin","macromotivo":"Pagamento","subcategoria":"Solicitação de 2ª via","tickets":4,"fin":4,"csat_pos":1,"csat_total":1},
+{"dia":"2026-06-02","time":"Fin","macromotivo":"0","subcategoria":"Fin","tickets":4,"fin":4,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-02","time":"Fora do horário","macromotivo":"Status de entrega","subcategoria":"Atraso na entrega","tickets":3,"fin":0,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-03","time":"N2","macromotivo":"Problemas de Logística","subcategoria":"Falta de item","tickets":17,"fin":0,"csat_pos":10,"csat_total":11},
+{"dia":"2026-06-03","time":"N2","macromotivo":"Problemas de Logística","subcategoria":"Inversão de produto","tickets":6,"fin":0,"csat_pos":2,"csat_total":2},
+{"dia":"2026-06-03","time":"N2","macromotivo":"Problemas de Logística","subcategoria":"Divergência na pesagem","tickets":5,"fin":0,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-03","time":"Fin","macromotivo":"Status de entrega","subcategoria":"Confirmação de status","tickets":12,"fin":12,"csat_pos":1,"csat_total":1},
+{"dia":"2026-06-03","time":"Fin","macromotivo":"Pedido","subcategoria":"Cancelamento de pedido","tickets":11,"fin":11,"csat_pos":1,"csat_total":1},
+{"dia":"2026-06-03","time":"Fin","macromotivo":"Pagamento","subcategoria":null,"tickets":10,"fin":10,"csat_pos":2,"csat_total":2},
+{"dia":"2026-06-03","time":"N2","macromotivo":"Pagamento","subcategoria":"Solicitação de 2ª via","tickets":7,"fin":0,"csat_pos":3,"csat_total":3},
+{"dia":"2026-06-03","time":"N2","macromotivo":"Pedido","subcategoria":"Cancelamento de pedido","tickets":8,"fin":0,"csat_pos":3,"csat_total":4},
+{"dia":"2026-06-03","time":"Fora do horário","macromotivo":"Pedido","subcategoria":"Cancelamento de pedido","tickets":4,"fin":0,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-04","time":"N2","macromotivo":"Problemas de Logística","subcategoria":"Inversão de produto","tickets":10,"fin":0,"csat_pos":6,"csat_total":6},
+{"dia":"2026-06-04","time":"N2","macromotivo":"Problemas de Logística","subcategoria":"Falta de item","tickets":5,"fin":0,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-04","time":"Fin","macromotivo":"Motivo não identificado","subcategoria":null,"tickets":9,"fin":9,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-04","time":"Fin","macromotivo":"Status de entrega","subcategoria":"Confirmação de status","tickets":9,"fin":9,"csat_pos":0,"csat_total":1},
+{"dia":"2026-06-04","time":"Fin","macromotivo":"Pedido","subcategoria":"Cancelamento de pedido","tickets":7,"fin":7,"csat_pos":0,"csat_total":1},
+{"dia":"2026-06-04","time":"N2","macromotivo":"Pagamento","subcategoria":"Solicitação de 2ª via","tickets":6,"fin":0,"csat_pos":1,"csat_total":1},
+{"dia":"2026-06-04","time":"N2","macromotivo":"Pedido","subcategoria":"Cancelamento de pedido","tickets":5,"fin":0,"csat_pos":4,"csat_total":4},
+{"dia":"2026-06-05","time":"N2","macromotivo":"Problemas de Logística","subcategoria":"Falta de item","tickets":12,"fin":0,"csat_pos":5,"csat_total":5},
+{"dia":"2026-06-05","time":"N2","macromotivo":"Problemas de Logística","subcategoria":"Inversão de produto","tickets":7,"fin":0,"csat_pos":2,"csat_total":2},
+{"dia":"2026-06-05","time":"Fin","macromotivo":"Motivo não identificado","subcategoria":null,"tickets":7,"fin":7,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-05","time":"Fin","macromotivo":"Status de entrega","subcategoria":"Confirmação de status","tickets":6,"fin":6,"csat_pos":2,"csat_total":2},
+{"dia":"2026-06-05","time":"N2","macromotivo":"Pedido","subcategoria":"Cancelamento de pedido","tickets":6,"fin":0,"csat_pos":5,"csat_total":5},
+{"dia":"2026-06-06","time":"Fin","macromotivo":"Status de entrega","subcategoria":"Confirmação de status","tickets":7,"fin":7,"csat_pos":1,"csat_total":1},
+{"dia":"2026-06-06","time":"Fin","macromotivo":"Motivo não identificado","subcategoria":null,"tickets":5,"fin":5,"csat_pos":0,"csat_total":1},
+{"dia":"2026-06-06","time":"N2","macromotivo":"Status de entrega","subcategoria":"Atraso na entrega","tickets":4,"fin":0,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-06","time":"N2","macromotivo":"Problemas de Logística","subcategoria":"Inversão de produto","tickets":2,"fin":0,"csat_pos":1,"csat_total":1},
+{"dia":"2026-06-07","time":"Fin","macromotivo":"Pedido","subcategoria":"Cancelamento de pedido","tickets":3,"fin":3,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-08","time":"N2","macromotivo":"Pagamento","subcategoria":"Solicitação de 2ª via","tickets":10,"fin":0,"csat_pos":3,"csat_total":3},
+{"dia":"2026-06-08","time":"N2","macromotivo":"Problemas de Logística","subcategoria":"Falta de item","tickets":10,"fin":0,"csat_pos":2,"csat_total":3},
+{"dia":"2026-06-08","time":"N2","macromotivo":"Problemas de Logística","subcategoria":"Inversão de produto","tickets":5,"fin":0,"csat_pos":1,"csat_total":1},
+{"dia":"2026-06-08","time":"Fin","macromotivo":"Pagamento","subcategoria":"Solicitação de 2ª via","tickets":7,"fin":7,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-08","time":"Fin","macromotivo":"Crédito","subcategoria":"Limite removido / suspenso","tickets":6,"fin":6,"csat_pos":1,"csat_total":2},
+{"dia":"2026-06-08","time":"Fin","macromotivo":"Motivo não identificado","subcategoria":null,"tickets":6,"fin":6,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-08","time":"Fin","macromotivo":"Dúvidas gerais sobre a Praso","subcategoria":"Como fazer pedido","tickets":5,"fin":5,"csat_pos":3,"csat_total":3},
+{"dia":"2026-06-08","time":"Fin","macromotivo":"Pedido","subcategoria":"Cancelamento de pedido","tickets":5,"fin":5,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-08","time":"Fin","macromotivo":"Problemas técnicos com o app","subcategoria":"Lentidão / travamento","tickets":5,"fin":5,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-08","time":"N2","macromotivo":"Avaria de produto","subcategoria":"Produto fora de padrão","tickets":6,"fin":0,"csat_pos":4,"csat_total":4},
+{"dia":"2026-06-09","time":"N2","macromotivo":"Problemas de Logística","subcategoria":"Falta de item","tickets":12,"fin":0,"csat_pos":4,"csat_total":4},
+{"dia":"2026-06-09","time":"N2","macromotivo":"Problemas de Logística","subcategoria":"Inversão de produto","tickets":7,"fin":0,"csat_pos":2,"csat_total":2},
+{"dia":"2026-06-09","time":"Fin","macromotivo":"Pedido","subcategoria":"Cancelamento de pedido","tickets":7,"fin":7,"csat_pos":1,"csat_total":2},
+{"dia":"2026-06-09","time":"N2","macromotivo":"Crédito","subcategoria":"Limite removido / suspenso","tickets":6,"fin":0,"csat_pos":2,"csat_total":2},
+{"dia":"2026-06-09","time":"N2","macromotivo":"Pagamento","subcategoria":"Cobrança indevida","tickets":6,"fin":0,"csat_pos":2,"csat_total":2},
+{"dia":"2026-06-09","time":"Fin","macromotivo":"Problemas técnicos com o app","subcategoria":"Lentidão / travamento","tickets":5,"fin":5,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-10","time":"N2","macromotivo":"Problemas de Logística","subcategoria":"Falta de item","tickets":20,"fin":0,"csat_pos":7,"csat_total":7},
+{"dia":"2026-06-10","time":"N2","macromotivo":"Problemas de Logística","subcategoria":"Inversão de produto","tickets":8,"fin":0,"csat_pos":2,"csat_total":2},
+{"dia":"2026-06-10","time":"Fin","macromotivo":"Pedido","subcategoria":null,"tickets":12,"fin":12,"csat_pos":2,"csat_total":2},
+{"dia":"2026-06-10","time":"Fin","macromotivo":"Nota fiscal","subcategoria":null,"tickets":7,"fin":7,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-10","time":"Fin","macromotivo":"Pagamento","subcategoria":"Solicitação de 2ª via","tickets":5,"fin":5,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-11","time":"N2","macromotivo":"Problemas de Logística","subcategoria":"Falta de item","tickets":14,"fin":0,"csat_pos":5,"csat_total":5},
+{"dia":"2026-06-11","time":"N2","macromotivo":"Problemas de Logística","subcategoria":"Inversão de produto","tickets":10,"fin":0,"csat_pos":4,"csat_total":4},
+{"dia":"2026-06-11","time":"Fin","macromotivo":"Status de entrega","subcategoria":"Confirmação de status","tickets":16,"fin":16,"csat_pos":6,"csat_total":6},
+{"dia":"2026-06-11","time":"Fin","macromotivo":"Motivo não identificado","subcategoria":null,"tickets":11,"fin":11,"csat_pos":1,"csat_total":2},
+{"dia":"2026-06-11","time":"N2","macromotivo":"Status de entrega","subcategoria":"Atraso na entrega","tickets":10,"fin":0,"csat_pos":1,"csat_total":2},
+{"dia":"2026-06-11","time":"N2","macromotivo":"Pagamento","subcategoria":"Cobrança indevida","tickets":8,"fin":0,"csat_pos":4,"csat_total":5},
+{"dia":"2026-06-12","time":"N2","macromotivo":"Problemas de Logística","subcategoria":"Falta de item","tickets":11,"fin":0,"csat_pos":2,"csat_total":2},
+{"dia":"2026-06-12","time":"Fin","macromotivo":"0","subcategoria":"Fin","tickets":6,"fin":6,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-12","time":"Fin","macromotivo":"Pagamento","subcategoria":"Solicitação de 2ª via","tickets":6,"fin":6,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-12","time":"Fin","macromotivo":"Motivo não identificado","subcategoria":null,"tickets":4,"fin":4,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-13","time":"Fin","macromotivo":"Status de entrega","subcategoria":"Confirmação de status","tickets":9,"fin":9,"csat_pos":3,"csat_total":3},
+{"dia":"2026-06-13","time":"Fin","macromotivo":"0","subcategoria":"Fin","tickets":7,"fin":7,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-13","time":"N2","macromotivo":"Status de entrega","subcategoria":"Não reconhecimento da entrega","tickets":7,"fin":0,"csat_pos":4,"csat_total":4},
+{"dia":"2026-06-13","time":"N2","macromotivo":"Problemas de Logística","subcategoria":"Falta de item","tickets":5,"fin":0,"csat_pos":3,"csat_total":3},
+{"dia":"2026-06-13","time":"N2","macromotivo":"Avaria de produto","subcategoria":"Produto fora de padrão","tickets":3,"fin":0,"csat_pos":1,"csat_total":1},
+{"dia":"2026-06-14","time":"Fin","macromotivo":"Dados cadastrais","subcategoria":"Validação de CNPJ","tickets":4,"fin":4,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-14","time":"Fin","macromotivo":"Pagamento","subcategoria":"Boleto em atraso","tickets":3,"fin":3,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-14","time":"Fin","macromotivo":"Dúvidas gerais sobre a Praso","subcategoria":"Como fazer pedido","tickets":3,"fin":3,"csat_pos":1,"csat_total":1},
+{"dia":"2026-06-15","time":"N2","macromotivo":"Problemas de Logística","subcategoria":"Falta de item","tickets":9,"fin":0,"csat_pos":5,"csat_total":5},
+{"dia":"2026-06-15","time":"N2","macromotivo":"Problemas de Logística","subcategoria":"Inversão de produto","tickets":3,"fin":0,"csat_pos":1,"csat_total":2},
+{"dia":"2026-06-15","time":"Fin","macromotivo":"Pagamento","subcategoria":null,"tickets":8,"fin":8,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-15","time":"N2","macromotivo":"Pagamento","subcategoria":"Solicitação de 2ª via","tickets":6,"fin":0,"csat_pos":0,"csat_total":1},
+{"dia":"2026-06-15","time":"N2","macromotivo":"Pagamento","subcategoria":"Boleto em atraso","tickets":6,"fin":0,"csat_pos":1,"csat_total":1},
+{"dia":"2026-06-15","time":"Fin","macromotivo":"Pedido","subcategoria":"Cancelamento de pedido","tickets":5,"fin":5,"csat_pos":1,"csat_total":1},
+{"dia":"2026-06-15","time":"Fin","macromotivo":"Pagamento","subcategoria":"Solicitação de 2ª via","tickets":5,"fin":5,"csat_pos":2,"csat_total":2},
+{"dia":"2026-06-15","time":"Fin","macromotivo":"Pagamento","subcategoria":"Boleto em atraso","tickets":5,"fin":5,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-16","time":"Fin","macromotivo":"Motivo não identificado","subcategoria":null,"tickets":8,"fin":8,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-16","time":"N2","macromotivo":"Problemas de Logística","subcategoria":"Falta de item","tickets":7,"fin":0,"csat_pos":2,"csat_total":2},
+{"dia":"2026-06-16","time":"N2","macromotivo":"Problemas de Logística","subcategoria":"Inversão de produto","tickets":5,"fin":0,"csat_pos":4,"csat_total":4},
+{"dia":"2026-06-16","time":"N2","macromotivo":"Avaria de produto","subcategoria":"Produto fora de padrão","tickets":6,"fin":0,"csat_pos":1,"csat_total":1},
+{"dia":"2026-06-16","time":"N2","macromotivo":"Pagamento","subcategoria":"Cobrança indevida","tickets":4,"fin":0,"csat_pos":4,"csat_total":4},
+{"dia":"2026-06-16","time":"Fin","macromotivo":"Crédito","subcategoria":"Aumento de limite","tickets":4,"fin":4,"csat_pos":1,"csat_total":2},
+{"dia":"2026-06-17","time":"N2","macromotivo":"Problemas de Logística","subcategoria":"Falta de item","tickets":19,"fin":0,"csat_pos":5,"csat_total":5},
+{"dia":"2026-06-17","time":"N2","macromotivo":"Problemas de Logística","subcategoria":"Inversão de produto","tickets":7,"fin":0,"csat_pos":2,"csat_total":3},
+{"dia":"2026-06-17","time":"Fin","macromotivo":"Pagamento","subcategoria":"Solicitação de 2ª via","tickets":13,"fin":13,"csat_pos":2,"csat_total":2},
+{"dia":"2026-06-17","time":"Fin","macromotivo":"Pedido","subcategoria":"Cancelamento de pedido","tickets":13,"fin":13,"csat_pos":1,"csat_total":1},
+{"dia":"2026-06-17","time":"Fin","macromotivo":"Motivo não identificado","subcategoria":null,"tickets":12,"fin":12,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-17","time":"Fin","macromotivo":"Crédito","subcategoria":"Limite removido / suspenso","tickets":6,"fin":6,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-17","time":"Fin","macromotivo":"Crédito","subcategoria":"Aumento de limite","tickets":6,"fin":6,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-18","time":"N2","macromotivo":"Problemas de Logística","subcategoria":"Falta de item","tickets":12,"fin":0,"csat_pos":4,"csat_total":5},
+{"dia":"2026-06-18","time":"Fin","macromotivo":"Status de entrega","subcategoria":"Confirmação de status","tickets":10,"fin":10,"csat_pos":2,"csat_total":2},
+{"dia":"2026-06-18","time":"Fin","macromotivo":"Motivo não identificado","subcategoria":null,"tickets":12,"fin":12,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-18","time":"Fin","macromotivo":"Problemas técnicos com o app","subcategoria":"Lentidão / travamento","tickets":8,"fin":8,"csat_pos":1,"csat_total":2},
+{"dia":"2026-06-18","time":"Fin","macromotivo":"Crédito","subcategoria":"Consulta de limite disponível","tickets":5,"fin":5,"csat_pos":0,"csat_total":1},
+{"dia":"2026-06-18","time":"N2","macromotivo":"Pedido","subcategoria":"Cancelamento de pedido","tickets":8,"fin":0,"csat_pos":4,"csat_total":4},
+{"dia":"2026-06-18","time":"N2","macromotivo":"Pagamento","subcategoria":"Cobrança indevida","tickets":6,"fin":0,"csat_pos":1,"csat_total":1},
+{"dia":"2026-06-18","time":"Fora do horário","macromotivo":"Problemas de Logística","subcategoria":"Falta de item","tickets":3,"fin":0,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-19","time":"N2","macromotivo":"Problemas de Logística","subcategoria":"Falta de item","tickets":8,"fin":0,"csat_pos":4,"csat_total":4},
+{"dia":"2026-06-19","time":"Fin","macromotivo":"Status de entrega","subcategoria":"Confirmação de status","tickets":8,"fin":8,"csat_pos":0,"csat_total":1},
+{"dia":"2026-06-19","time":"Fin","macromotivo":"Motivo não identificado","subcategoria":null,"tickets":10,"fin":10,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-19","time":"Fin","macromotivo":"0","subcategoria":"Fin","tickets":10,"fin":10,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-19","time":"N2","macromotivo":"Pagamento","subcategoria":"Cobrança indevida","tickets":7,"fin":0,"csat_pos":5,"csat_total":5},
+{"dia":"2026-06-19","time":"N2","macromotivo":"Avaria de produto","subcategoria":"Produto fora de padrão","tickets":7,"fin":0,"csat_pos":2,"csat_total":2},
+{"dia":"2026-06-19","time":"N2","macromotivo":"Pedido","subcategoria":"Cancelamento de pedido","tickets":8,"fin":0,"csat_pos":3,"csat_total":3},
+{"dia":"2026-06-20","time":"N2","macromotivo":"Problemas de Logística","subcategoria":"Falta de item","tickets":5,"fin":0,"csat_pos":2,"csat_total":2},
+{"dia":"2026-06-20","time":"Fin","macromotivo":"Status de entrega","subcategoria":"Confirmação de status","tickets":5,"fin":5,"csat_pos":1,"csat_total":1},
+{"dia":"2026-06-20","time":"N2","macromotivo":"Status de entrega","subcategoria":"Confirmação de status","tickets":4,"fin":0,"csat_pos":2,"csat_total":2},
+{"dia":"2026-06-20","time":"N2","macromotivo":"Avaria de produto","subcategoria":"Produto fora de padrão","tickets":5,"fin":0,"csat_pos":3,"csat_total":4},
+{"dia":"2026-06-20","time":"Fora do horário","macromotivo":"Status de entrega","subcategoria":"Atraso na entrega","tickets":5,"fin":0,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-20","time":"Fora do horário","macromotivo":"Avaria de produto","subcategoria":"Fora do horário","tickets":4,"fin":0,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-20","time":"Fora do horário","macromotivo":"Problemas de Logística","subcategoria":"Inversão de produto","tickets":3,"fin":0,"csat_pos":0,"csat_total":0},
+{"dia":"2026-06-20","time":"Fin","macromotivo":"Pedido","subcategoria":"Cancelamento de pedido","tickets":3,"fin":3,"csat_pos":1,"csat_total":1},
+{"dia":"2026-06-20","time":"N2","macromotivo":"Pedido","subcategoria":"Cancelamento de pedido","tickets":3,"fin":0,"csat_pos":0,"csat_total":0}
+]
+;
 
-// ── DADOS ──
+/* Stats pré-computados com dados corretos (Motoristas excluídos) */
+/* CSAT = admin_CSAT='Tiago' apenas | Retenção = FIN/total excl. Motoristas */
+const STATS={
+  geral:{ret:49.5,csat:76.5,fin:1469,tot:2967,csat_pos:179,csat_tot:234},
+  s1:{ret:46.1,csat:75.7,fin:461,tot:999,csat_pos:56,csat_tot:74,otif:94.6},
+  s2:{ret:51.6,csat:78.6,fin:525,tot:1017,csat_pos:66,csat_tot:84,otif:95.4},
+  s3:{ret:50.8,csat:75.0,fin:487,tot:959,csat_pos:57,csat_tot:76,otif:95.4}
+};
 
-const MES_DIAS=["01/06", "02/06", "03/06", "04/06", "05/06", "06/06", "07/06", "08/06", "09/06", "10/06", "11/06", "12/06", "13/06", "14/06", "15/06", "16/06", "17/06", "18/06", "19/06", "20/06", "21/06", "22/06", "23/06", "24/06", "25/06", "26/06", "27/06", "28/06", "29/06", "30/06", "01/07", "02/07", "03/07", "04/07"];
-const MES_RET=[75.9, 73.3, 67.2, 52.9, 70.0, 71.4, 72.7, 68.8, 68.5, 62.5, 60.0, 65.6, 74.3, 64.8, 66.3, 69.1, 53.3, 65.8, 64.6, 66.7, 58.8, 63.5, 56.4, 68.9, 49.1, 79.4, 66.0, 100.0, 67.0, 65.4, 80.5, 68.6, 67.5, 52.4];
-const MES_FIN=[44, 74, 41, 18, 49, 15, 16, 53, 61, 40, 45, 42, 26, 35, 59, 67, 32, 50, 42, 18, 10, 80, 57, 31, 52, 85, 31, 26, 59, 70, 91, 72, 54, 22];
-const MES_N2=[14, 27, 20, 16, 21, 6, 6, 24, 28, 24, 30, 22, 9, 19, 30, 30, 28, 26, 23, 9, 0, 46, 44, 14, 54, 22, 16, 0, 29, 37, 22, 33, 26, 20];
-const MES_FORA=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-const MES_OTIF=[90.7, 91.1, 89.6, 89.7, 90.8, 91.5, null, 90.2, 91.2, 91.4, 90.0, 90.2, 90.4, null, 92.7, 92.6, 90.6, 90.2, 91.5, 86.6, null, 87.0, 88.4, 89.1, 89.5, 91.8, 92.3, null, 89.7, 91.5, 90.3, 93.3, 91.9, 91.4];
-const MES_MOTS=["Pagamento", "Problemas de Log\u2026", "Status de entreg\u2026", "Dados cadastrais", "Pedido", "Cr\u00e9dito", "D\u00favidas gerais s\u2026", "Problemas t\u00e9cnic\u2026"];
-const MES_RETM=[63.1, 0.0, 86.7, 100.0, 95.6, 100.0, 100.0, 100.0];
-const MES_CSATM=[78.8, null, 73.6, 68.3, 78.3, 76.5, 100.0, 63.6];
-const MES_VOLF=[431, 0, 391, 288, 153, 122, 93, 89];
-const MES_VOLN=[249, 456, 56, 0, 7, 0, 0, 0];
+/* Retention diária verificada */
+const DAILY_RET={
+  '2026-06-01':40.3,'2026-06-02':44.5,'2026-06-03':43.8,'2026-06-04':47.9,
+  '2026-06-05':43.4,'2026-06-06':56.9,'2026-06-07':80.0,
+  '2026-06-08':55.5,'2026-06-09':48.1,'2026-06-10':52.1,'2026-06-11':48.9,
+  '2026-06-12':48.3,'2026-06-13':52.9,'2026-06-14':72.7,
+  '2026-06-15':53.7,'2026-06-16':47.9,'2026-06-17':54.9,'2026-06-18':53.4,
+  '2026-06-19':52.0,'2026-06-20':34.1
+};
 
-const S1_DIAS=["01/06", "02/06", "03/06", "04/06", "05/06", "06/06", "07/06"];
-const S1_RET=[75.9, 73.3, 67.2, 52.9, 70.0, 71.4, 72.7];
-const S1_FIN=[44, 74, 41, 18, 49, 15, 16];
-const S1_N2=[14, 27, 20, 16, 21, 6, 6];
-const S1_FORA=[0, 0, 0, 0, 0, 0, 0];
-const S1_OTIF=[90.7, 91.1, 89.6, 89.7, 90.8, 91.5, null];
-const S1_MOTS=["Pagamento", "Problemas de Log\u2026", "Status de entreg\u2026", "Dados cadastrais", "Pedido", "Cr\u00e9dito", "D\u00favidas gerais s\u2026"];
-const S1_RETM=[64.0, 0.0, 100.0, 100.0, 100.0, 100.0, 100.0];
-const S1_CSATM=[75.0, null, 66.7, 70.0, 66.7, 50.0, 100.0];
-const S1_VOLF=[71, 0, 65, 51, 38, 18, 14];
-const S1_VOLN=[40, 70, 0, 0, 0, 0, 0];
+/* CSAT Tiago = admin_CSAT='Tiago' (notas 4-5 / total respondido pelo Tiago) */
+const DAILY_CSAT={
+  '2026-06-01':87.5,'2026-06-02':73.7,'2026-06-03':84.6,'2026-06-04':77.8,
+  '2026-06-05':80.0,'2026-06-06':50.0,'2026-06-07':null,
+  '2026-06-08':80.0,'2026-06-09':75.0,'2026-06-10':81.2,'2026-06-11':90.9,
+  '2026-06-12':75.0,'2026-06-13':61.5,'2026-06-14':50.0,
+  '2026-06-15':78.6,'2026-06-16':81.8,'2026-06-17':73.7,'2026-06-18':70.6,
+  '2026-06-19':66.7,'2026-06-20':83.3
+};
 
-const S2_DIAS=["08/06", "09/06", "10/06", "11/06", "12/06", "13/06", "14/06"];
-const S2_RET=[68.8, 68.5, 62.5, 60.0, 65.6, 74.3, 64.8];
-const S2_FIN=[53, 61, 40, 45, 42, 26, 35];
-const S2_N2=[24, 28, 24, 30, 22, 9, 19];
-const S2_FORA=[0, 0, 0, 0, 0, 0, 0];
-const S2_OTIF=[90.2, 91.2, 91.4, 90.0, 90.2, 90.4, null];
-const S2_MOTS=["Pagamento", "Status de entreg\u2026", "Problemas de Log\u2026", "Dados cadastrais", "Pedido", "D\u00favidas gerais s\u2026", "Cr\u00e9dito"];
-const S2_RETM=[62.6, 100.0, 0.0, 100.0, 100.0, 100.0, 100.0];
-const S2_CSATM=[80.0, 78.3, null, 72.2, 66.7, 100.0, 100.0];
-const S2_VOLF=[102, 96, 0, 72, 13, 10, 9];
-const S2_VOLN=[61, 0, 95, 0, 0, 0, 0];
+const OTIF_DATA={
+  '2026-06-01':{o:1358,nif:28,not:37},'2026-06-02':{o:2908,nif:83,not:78},
+  '2026-06-03':{o:2636,nif:64,not:111},'2026-06-04':{o:1800,nif:54,not:57},
+  '2026-06-05':{o:2575,nif:61,not:79},'2026-06-06':{o:1470,nif:27,not:53},
+  '2026-06-08':{o:1401,nif:26,not:42},'2026-06-09':{o:3068,nif:65,not:94},
+  '2026-06-10':{o:2550,nif:71,not:37},'2026-06-11':{o:2816,nif:52,not:95},
+  '2026-06-12':{o:2351,nif:53,not:45},'2026-06-13':{o:1227,nif:20,not:53},
+  '2026-06-15':{o:1414,nif:20,not:22},'2026-06-16':{o:3022,nif:74,not:58},
+  '2026-06-17':{o:2521,nif:46,not:89},'2026-06-18':{o:3089,nif:66,not:73},
+  '2026-06-19':{o:2554,nif:58,not:62},'2026-06-20':{o:1425,nif:29,not:76}
+};
 
-const S3_DIAS=["15/06", "16/06", "17/06", "18/06", "19/06", "20/06", "21/06"];
-const S3_RET=[66.3, 69.1, 53.3, 65.8, 64.6, 66.7, 58.8];
-const S3_FIN=[59, 67, 32, 50, 42, 18, 10];
-const S3_N2=[30, 30, 28, 26, 23, 9, 0];
-const S3_FORA=[0, 0, 0, 0, 0, 0, 7];
-const S3_OTIF=[92.7, 92.6, 90.6, 90.2, 91.5, 86.6, null];
-const S3_MOTS=["Pagamento", "Problemas de Log\u2026", "Status de entreg\u2026", "Dados cadastrais", "Pedido", "Cr\u00e9dito"];
-const S3_RETM=[61.6, 0.0, 95.4, 100.0, 100.0, 100.0];
-const S3_CSATM=[77.8, null, 78.3, 71.4, 66.7, 75.0];
-const S3_VOLF=[98, 0, 83, 65, 18, 14];
-const S3_VOLN=[58, 88, 0, 0, 0, 0];
+const WEEKS={
+  s1:['2026-06-01','2026-06-02','2026-06-03','2026-06-04','2026-06-05','2026-06-06','2026-06-07'],
+  s2:['2026-06-08','2026-06-09','2026-06-10','2026-06-11','2026-06-12','2026-06-13','2026-06-14'],
+  s3:['2026-06-15','2026-06-16','2026-06-17','2026-06-18','2026-06-19','2026-06-20']
+};
+const ALL=[...WEEKS.s1,...WEEKS.s2,...WEEKS.s3];
+const EXCL=['0','Motivo não identificado'];
+const SN={'Problemas de Logística':'Prob. Logística','Dúvidas gerais sobre a Praso':'Dúvidas Praso','Problemas técnicos com o app':'Prob. App','Avaria de produto':'Avaria','Cupom de bonificação':'Cupom','Dados cadastrais':'Cadastro','Status de entrega':'St. Entrega'};
+const sn=m=>SN[m]||m;
 
-const S4_DIAS=["22/06", "23/06", "24/06", "25/06", "26/06", "27/06", "28/06"];
-const S4_RET=[63.5, 56.4, 68.9, 49.1, 79.4, 66.0, 100.0];
-const S4_FIN=[80, 57, 31, 52, 85, 31, 26];
-const S4_N2=[46, 44, 14, 54, 22, 16, 0];
-const S4_FORA=[0, 0, 0, 0, 0, 0, 0];
-const S4_OTIF=[87.0, 88.4, 89.1, 89.5, 91.8, 92.3, null];
-const S4_MOTS=["Pagamento", "Status de entreg\u2026", "Problemas de Log\u2026", "D\u00favidas gerais s\u2026", "Cr\u00e9dito", "Pedido", "Dados cadastrais", "Problemas t\u00e9cnic\u2026"];
-const S4_RETM=[68.1, 65.5, 0.0, 100.0, 100.0, 83.7, 100.0, 100.0];
-const S4_CSATM=[88.2, 81.2, null, 100.0, 100.0, 100.0, 85.7, 60.0];
-const S4_VOLF=[81, 76, 0, 46, 46, 36, 40, 37];
-const S4_VOLN=[38, 40, 111, 0, 0, 7, 0, 0];
+function aggMot(days){
+  const o={};
+  RAW.forEach(r=>{
+    if(!days.includes(r.dia)||EXCL.includes(r.macromotivo))return;
+    const m=r.macromotivo||'Sem motivo';
+    if(!o[m])o[m]={fTk:0,n2Tk:0,foraTk:0,tot:0,fFin:0,cfp:0,cft:0,n2cfp:0,n2cft:0,subs:{}};
+    const b=o[m];b.tot+=r.tickets;
+    const s=r.subcategoria||'(sem subcategoria)';
+    if(!b.subs[s])b.subs[s]={tickets:0,fin:0};
+    b.subs[s].tickets+=r.tickets;b.subs[s].fin+=r.fin;
+    if(r.time==='Fin'){b.fTk+=r.tickets;b.fFin+=r.fin;b.cfp+=r.csat_pos;b.cft+=r.csat_total;}
+    else if(r.time==='N2'){b.n2Tk+=r.tickets;b.n2cfp+=r.csat_pos;b.n2cft+=r.csat_total;}
+    else b.foraTk+=r.tickets;
+  });
+  return o;
+}
 
-const S1JUL_DIAS=["29/06", "30/06", "01/07", "02/07", "03/07", "04/07"];
-const S1JUL_RET=[67.0, 65.4, 80.5, 68.6, 67.5, 52.4];
-const S1JUL_FIN=[59, 70, 91, 72, 54, 22];
-const S1JUL_N2=[29, 37, 22, 33, 26, 20];
-const S1JUL_FORA=[0, 0, 0, 0, 0, 0];
-const S1JUL_OTIF=[89.7, 91.5, 90.3, 93.3, 91.9, 91.4];
-const S1JUL_MOTS=["Pagamento", "Problemas de Log\u2026", "Status de entreg\u2026", "Dados cadastrais", "Problemas t\u00e9cnic\u2026", "Pedido", "Cr\u00e9dito", "D\u00favidas gerais s\u2026"];
-const S1JUL_RETM=[60.3, 0.0, 81.6, 100.0, 100.0, 100.0, 100.0, 100.0];
-const S1JUL_CSATM=[73.7, null, 57.1, 45.5, 66.7, 87.5, 66.7, 100.0];
-const S1JUL_VOLF=[79, 0, 71, 60, 52, 48, 35, 23];
-const S1JUL_VOLN=[52, 92, 16, 0, 0, 0, 0, 0];
+const BLU='#1a47b8',AMBI='#d97706',GRN='#16a34a',RED='#dc2626',SL4='#94a3b8';
+const gc='rgba(0,0,0,.04)',tc='#94a3b8';
 
+const DL={id:'dl',afterDatasetsDraw(chart){const ctx=chart.ctx;chart.data.datasets.forEach((ds,di)=>{if(!ds.showLabels)return;const meta=chart.getDatasetMeta(di);if(meta.hidden)return;meta.data.forEach((el,i)=>{const v=ds.data[i];if(v==null||v===0)return;const{x,y}=el.tooltipPosition();ctx.save();ctx.font='bold 10px Inter,sans-serif';ctx.fillStyle=ds.labelColor||'#334155';ctx.textAlign='center';ctx.textBaseline='bottom';ctx.fillText(typeof v==='number'?v.toFixed(0)+'%':v,x,y-3);ctx.restore();});});}};
+Chart.register(DL);
 
-// ── FÁBRICAS DE GRÁFICOS ──
-function mkDailyChart(id,dias,ret,fin,n2,fora,otif){
-  const ctx=document.getElementById(id);
-  if(!ctx)return;
-  new Chart(ctx,{
-    type:"bar",
-    data:{
-      labels:dias,
-      datasets:[
-        {label:"FIN",data:fin,backgroundColor:BLU+"99",borderWidth:0,borderRadius:3,yAxisID:"yVol",stack:"s",order:3},
-        {label:"N2",data:n2,backgroundColor:AMB+"99",borderWidth:0,stack:"s",yAxisID:"yVol",order:4},
-        {label:"Fora",data:fora,backgroundColor:SL+"66",borderWidth:0,stack:"s",yAxisID:"yVol",order:5},
-        {label:"Retenção %",data:ret,type:"line",borderColor:BLU,backgroundColor:BLU,borderWidth:2,pointRadius:3,pointBackgroundColor:"#fff",pointBorderColor:BLU,pointBorderWidth:2,yAxisID:"yRet",order:1},
-        {label:"OTIF %",data:otif,type:"line",borderColor:ORA,backgroundColor:ORA,borderWidth:1.5,borderDash:[4,3],pointRadius:2,yAxisID:"yRet",order:2},
-      ]
-    },
-    options:{responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{position:"top",labels:{font:{size:10},boxWidth:10,boxHeight:10,padding:12}},
-        tooltip:{callbacks:{label:ctx=>ctx.dataset.label+": "+ctx.raw+(ctx.dataset.yAxisID==="yRet"?"%":"")}}
-      },
-      scales:{
-        x:{grid:{display:false},border:{display:false},ticks:{font:{size:9}}},
-        yVol:{type:"linear",position:"left",stacked:true,grid:{color:"#f1f5f9"},border:{display:false},ticks:{font:{size:9}}},
-        yRet:{type:"linear",position:"right",min:50,max:100,grid:{display:false},border:{display:false},ticks:{callback:v=>v+"%",font:{size:9}}}
-      }
+const ANNOT={id:'annot',afterDraw(chart){const c=chart.canvas;if(!c.dataset.annot)return;const opts=JSON.parse(c.dataset.annot);const ctx=chart.ctx,ya=chart.scales.y,xa=chart.scales.x;ctx.save();opts.forEach(({v,color,label,dash})=>{const py=ya.getPixelForValue(v);ctx.strokeStyle=color;ctx.lineWidth=1.2;ctx.setLineDash(dash?[5,4]:[]);ctx.beginPath();ctx.moveTo(xa.left,py);ctx.lineTo(xa.right,py);ctx.stroke();ctx.fillStyle=color;ctx.font='600 9px Inter,sans-serif';ctx.setLineDash([]);ctx.textAlign='right';ctx.fillText(label,xa.right-4,py-4);});ctx.restore();}};
+Chart.register(ANNOT);
+
+function annotStr(v60,v90){const a=[];if(v60)a.push({v:60,color:GRN,label:'60% meta ret',dash:false});if(v90)a.push({v:80,color:AMBI,label:'80% meta CSAT',dash:true});return JSON.stringify(a);}
+
+const BASE={responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{backgroundColor:'rgba(15,23,42,.9)',titleFont:{size:11,family:'Inter'},bodyFont:{size:11,family:'Inter'},padding:10,callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y!=null?c.parsed.y.toFixed(1)+'%':'—'}`}}},scales:{x:{ticks:{color:tc,font:{size:10,family:'Inter'},maxRotation:35},grid:{display:false},border:{color:gc}},y:{min:0,max:100,ticks:{color:tc,font:{size:10,family:'Inter'},callback:v=>v+'%'},grid:{color:gc},border:{display:false}}}};
+
+function lineDS(label,data,color,dash=false,showLabels=false){return{type:'line',label,data,borderColor:color,backgroundColor:'transparent',tension:.35,pointRadius:3.5,pointBackgroundColor:color,pointBorderColor:'#fff',pointBorderWidth:1.5,fill:false,borderDash:dash?[5,4]:[],borderWidth:2,showLabels,labelColor:color};}
+function barDS(label,data,color,showLabels=false){return{type:'bar',label,data,backgroundColor:color,borderWidth:0,borderRadius:3,showLabels,labelColor:color};}
+
+function mkKPI(id,items){
+  const el=document.getElementById(id);if(!el)return;
+  const am={'blue':'k-blue','green':'k-green','amber':'k-amber','red':'k-red','purple':'k-purple','slate':'k-slate'};
+  const vm={'blue':'kv-blue','green':'kv-green','amber':'kv-amber','red':'kv-red'};
+  el.innerHTML=items.map(({label,value,accent='slate',val='',delta,sub})=>`<div class="kpi-card ${am[accent]||'k-slate'}"><p class="kpi-label">${label}</p><p class="kpi-value ${vm[val]||''}">${value}</p>${delta?`<p class="kpi-delta ${delta.up?'d-up':'d-dn'}">${delta.up?'▲':'▼'} ${delta.text}</p>`:''}${sub?`<p class="kpi-sub">${sub}</p>`:''}</div>`).join('');
+}
+
+function mkProg(fid,vid,pct){
+  const f=document.getElementById(fid),v=document.getElementById(vid);
+  if(f)f.style.width=Math.min(pct/80*100,100)+'%';
+  if(v)v.textContent=pct.toFixed(1)+'%';
+}
+
+function mkTable(id,days){
+  const tbl=document.getElementById(id);if(!tbl)return;
+  const m=aggMot(days);
+  const sorted=Object.entries(m).sort((a,b)=>b[1].tot-a[1].tot).slice(0,10);
+  const tot=sorted.reduce((s,[,v])=>s+v.tot,0);
+  let h=`<thead><tr><th>Motivo · Subcategoria crítica (N2)</th><th class="r">Vol.</th><th class="r">Repr.</th><th class="r">Ret. Tiago</th><th class="r">CSAT Tiago</th><th class="c">Status</th></tr></thead><tbody>`;
+  sorted.forEach(([mot,v])=>{
+    const ret=v.tot?v.fFin/v.tot*100:0;
+    const csat=v.cft?v.cfp/v.cft*100:null;
+    const repr=tot?v.tot/tot*100:0;
+    const rc=ret>=60?'p-green':ret>=30?'p-amber':'p-red';
+    const cc=csat==null?'p-slate':csat>=90?'p-green':csat>=70?'p-amber':'p-red';
+    let diag,dc;
+    if(ret===0){diag='bloqueio';dc='p-red';}
+    else if(ret<30){diag='crítico';dc='p-red';}
+    else if(ret<60){diag='⚠ abaixo';dc='p-amber';}
+    else if(csat!=null&&csat<70){diag='CSAT baixo';dc='p-amber';}
+    else{diag='✓ ok';dc='p-green';}
+    // Top N2 subcategoria
+    const n2subs=Object.entries(v.subs).filter(([s,sv])=>sv.fin===0&&sv.tickets>0).sort((a,b)=>b[1].tickets-a[1].tickets).slice(0,1);
+    const subTxt=n2subs.length?`<br><small style="color:var(--slate-400)">N2: ${n2subs[0][0]} (${n2subs[0][1].tickets})</small>`:'';
+    h+=`<tr><td><strong style="color:var(--slate-900)">${mot}</strong>${subTxt}</td><td class="r">${v.tot}</td><td class="r">${repr.toFixed(0)}%</td><td class="r"><span class="pill ${rc}">${ret.toFixed(0)}%</span></td><td class="r"><span class="pill ${cc}">${csat!=null?csat.toFixed(0)+'%':'n/d'}</span></td><td class="c"><span class="pill ${dc}">${diag}</span></td></tr>`;
+  });
+  tbl.innerHTML=h+'</tbody>';
+}
+
+function mkDayChart(id,days,showOtif=false){
+  const lbl=days.map(d=>{const p=d.split('-');return p[2]+'/'+p[1];});
+  const ret=days.map(d=>DAILY_RET[d]!=null?DAILY_RET[d]:null);
+  const csat=days.map(d=>DAILY_CSAT[d]!=null?DAILY_CSAT[d]:null);
+  const otif=days.map(d=>{const ov=OTIF_DATA[d];if(!ov)return null;const t=ov.o+ov.nif+ov.not;return t?+(ov.o/t*100).toFixed(1):null;});
+  const c=document.getElementById(id);if(!c)return;
+  c.dataset.annot=annotStr(true,true);
+  const dsets=[];
+  if(showOtif)dsets.push(barDS('OTIF%',otif,'rgba(22,163,74,.12)'));
+  dsets.push(lineDS('Retenção Tiago %',ret,BLU,false,true));
+  dsets.push(lineDS('CSAT Tiago %',csat,AMBI,true,true));
+  new Chart(c,{data:{labels:lbl,datasets:dsets},options:{...BASE}});
+}
+
+function mkVolChart(id,days){
+  const lbl=days.map(d=>{const p=d.split('-');return p[2]+'/'+p[1];});
+  const fin=days.map(d=>{let s=0;RAW.forEach(r=>{if(r.dia===d&&r.time==='Fin')s+=r.tickets;});return s;});
+  const n2=days.map(d=>{let s=0;RAW.forEach(r=>{if(r.dia===d&&r.time==='N2')s+=r.tickets;});return s;});
+  const fora=days.map(d=>{let s=0;RAW.forEach(r=>{if(r.dia===d&&r.time==='Fora do horário')s+=r.tickets;});return s;});
+  const c=document.getElementById(id);if(!c)return;
+  new Chart(c,{type:'bar',data:{labels:lbl,datasets:[{label:'FIN',data:fin,backgroundColor:BLU+'cc',borderWidth:0,borderRadius:2},{label:'N2',data:n2,backgroundColor:AMBI+'cc',borderWidth:0},{label:'Fora',data:fora,backgroundColor:SL4+'88',borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,backgroundColor:'rgba(15,23,42,.9)',titleFont:{size:11},bodyFont:{size:11},padding:10}},scales:{x:{stacked:true,ticks:{color:tc,font:{size:10},maxRotation:35},grid:{display:false},border:{color:gc}},y:{stacked:true,ticks:{color:tc,font:{size:10}},grid:{color:gc},border:{display:false}}}}});
+}
+
+function mkMotChart(id,days){
+  const m=aggMot(days);
+  const sorted=Object.entries(m).sort((a,b)=>b[1].tot-a[1].tot).slice(0,8);
+  const lbl=sorted.map(([mot])=>sn(mot));
+  const ret=sorted.map(([,v])=>v.tot?+(v.fFin/v.tot*100).toFixed(1):0);
+  const csat=sorted.map(([,v])=>v.cft?+(v.cfp/v.cft*100).toFixed(1):null);
+  const c=document.getElementById(id);if(!c)return;
+  c.dataset.annot=annotStr(true,true);
+  new Chart(c,{data:{labels:lbl,datasets:[{type:'bar',label:'Retenção Tiago %',data:ret,backgroundColor:ret.map(v=>v>=60?BLU+'cc':v>=30?GRN+'88':RED+'99'),borderWidth:0,borderRadius:3,showLabels:true,labelColor:'#334155'},{type:'bar',label:'CSAT Tiago %',data:csat,backgroundColor:AMBI+'88',borderWidth:0,borderRadius:3,showLabels:true,labelColor:'#78350f'}]},options:{...BASE,scales:{...BASE.scales,y:{...BASE.scales.y,max:105}}}});
+}
+
+function mkDOW(){
+  const DOW=[0,1,2,3,4,5];const DN=['Dom','Seg','Ter','Qua','Qui','Sex'];
+  const dd={};DOW.forEach(d=>dd[d]={ret:null,csat:null,days:0});
+  const dayMap={'0':'Dom','1':'Seg','2':'Ter','3':'Qua','4':'Qui','5':'Sex','6':'Sáb'};
+  // Use pre-computed daily values
+  ALL.forEach(ds=>{
+    const dow=new Date(ds+'T12:00:00').getDay();
+    if(dow===6)return;// skip saturday
+    if(dd[dow]===undefined)return;
+    if(DAILY_RET[ds]!=null){
+      dd[dow].ret=(dd[dow].ret||0)+DAILY_RET[ds];
+      dd[dow].days++;
     }
   });
-}
+  // Recompute as averages
+  const retA=DOW.map(d=>dd[d].days?+(dd[d].ret/dd[d].days).toFixed(1):null);
+  // CSAT by DOW
+  const csatMap={};ALL.forEach(ds=>{const dow=new Date(ds+'T12:00:00').getDay();if(dow===6)return;if(!csatMap[dow])csatMap[dow]={s:0,n:0};if(DAILY_CSAT[ds]!=null){csatMap[dow].s+=DAILY_CSAT[ds];csatMap[dow].n++;}});
+  const csatA=DOW.map(d=>csatMap[d]&&csatMap[d].n?+(csatMap[d].s/csatMap[d].n).toFixed(1):null);
+  // Volume avg by DOW from RAW
+  const volMap={};ALL.forEach(ds=>{const dow=new Date(ds+'T12:00:00').getDay();if(dow===6)return;if(!volMap[dow])volMap[dow]={s:0,n:0};let t=0;RAW.forEach(r=>{if(r.dia===ds)t+=r.tickets;});volMap[dow].s+=t;volMap[dow].n++;});
+  const volA=DOW.map(d=>volMap[d]&&volMap[d].n?Math.round(volMap[d].s/volMap[d].n):0);
 
-function mkRetChart(id,mots,retm){
-  const ctx=document.getElementById(id); if(!ctx)return;
-  new Chart(ctx,{type:"bar",data:{labels:mots,datasets:[{label:"Retenção %",data:retm,backgroundColor:retm.map(v=>v>=60?BLU+"cc":v>=30?AMB+"cc":RED+"99"),borderRadius:3,borderWidth:0}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:0,max:100,ticks:{callback:v=>v+"%",font:{size:9}}},x:{ticks:{font:{size:9}}}}}
+  const grid=document.getElementById('dow-grid');if(!grid)return;
+  let h='';
+  DOW.forEach((d,i)=>{
+    const ret=retA[i]||0,csat=csatA[i];
+    const avg=volA[i];
+    let bg,tc2,bdr,tag='';
+    if(ret>=53){bg='#dcfce7';tc2='#166534';bdr='#bbf7d0';}
+    else if(ret>=45){bg='#fef3c7';tc2='#92400e';bdr='#fde68a';}
+    else{bg='#fee2e2';tc2='#991b1b';bdr='#fecaca';}
+    if(d===1)tag=`<div class="dow-tag" style="background:#fee2e2;color:#991b1b">maior vol.</div>`;
+    if(d===5)tag=`<div class="dow-tag" style="background:#fef3c7;color:#92400e">fim de semana</div>`;
+    if(d===2||d===3)tag=`<div class="dow-tag" style="background:#dcfce7;color:#166534">melhor dia</div>`;
+    h+=`<div class="dow-cell" style="background:${bg};border-color:${bdr}"><div class="dow-name" style="color:${tc2}">${DN[i]}</div><div class="dow-ret" style="color:${tc2}">${ret.toFixed(0)}%</div><div class="dow-csat" style="color:${tc2}">${csat!=null?'CSAT '+csat.toFixed(0)+'%':'—'}</div><div class="dow-vol" style="color:${tc2}">~${avg} tk/dia</div>${tag}</div>`;
   });
+  grid.innerHTML=h;
+
+  const c=document.getElementById('c-dow');if(!c)return;
+  c.dataset.annot=annotStr(true,false);
+  new Chart(c,{data:{labels:DN,datasets:[{type:'bar',label:'Retenção %',data:retA,backgroundColor:retA.map(v=>v>=53?BLU+'cc':v>=45?AMBI+'88':RED+'99'),borderWidth:0,borderRadius:4,showLabels:true,labelColor:'#334155'},lineDS('CSAT Tiago %',csatA,AMBI,true,true)]},options:{...BASE,scales:{...BASE.scales,y:{...BASE.scales.y,max:105}}}});
 }
 
-function mkCsatChart(id,mots,csatm){
-  const ctx=document.getElementById(id); if(!ctx)return;
-  new Chart(ctx,{type:"bar",data:{labels:mots,datasets:[{label:"CSAT %",data:csatm,backgroundColor:csatm.map(v=>v==null?SL+"55":v>=80?GRN+"cc":AMB+"cc"),borderRadius:3,borderWidth:0}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:0,max:100,ticks:{callback:v=>v+"%",font:{size:9}}},x:{ticks:{font:{size:9}}}}}
+function mkGeralTL(){
+  const lbl=ALL.map(d=>{const p=d.split('-');return p[2]+'/'+p[1];});
+  const ret=ALL.map(d=>DAILY_RET[d]!=null?DAILY_RET[d]:null);
+  const csat=ALL.map(d=>DAILY_CSAT[d]!=null?DAILY_CSAT[d]:null);
+  const otif=ALL.map(d=>{const ov=OTIF_DATA[d];if(!ov)return null;const t=ov.o+ov.nif+ov.not;return t?+(ov.o/t*100).toFixed(1):null;});
+  const c=document.getElementById('c-geral-tl');if(!c)return;
+  c.dataset.annot=annotStr(true,true);
+  new Chart(c,{data:{labels:lbl,datasets:[barDS('OTIF%',otif,'rgba(22,163,74,.12)'),lineDS('Retenção Tiago %',ret,BLU,false,true),lineDS('CSAT Tiago %',csat,AMBI,true,true)]},options:{...BASE}});
+}
+
+function mkGeralMot(){mkMotChart('c-geral-mot',ALL);}
+
+function mkGeralVol(){
+  const m=aggMot(ALL);
+  const sorted=Object.entries(m).sort((a,b)=>b[1].tot-a[1].tot).slice(0,9);
+  const lbl=sorted.map(([mot])=>sn(mot));
+  const c=document.getElementById('c-geral-vol');if(!c)return;
+  new Chart(c,{type:'bar',data:{labels:lbl,datasets:[{label:'FIN',data:sorted.map(([,v])=>v.fTk),backgroundColor:BLU+'cc',borderWidth:0,showLabels:true,labelColor:'#1e3a8a'},{label:'N2',data:sorted.map(([,v])=>v.n2Tk),backgroundColor:AMBI+'cc',borderWidth:0},{label:'Fora',data:sorted.map(([,v])=>v.foraTk),backgroundColor:SL4+'88',borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,backgroundColor:'rgba(15,23,42,.9)',titleFont:{size:11},bodyFont:{size:11},padding:10}},scales:{x:{stacked:true,ticks:{color:tc,font:{size:9},maxRotation:40},grid:{display:false},border:{color:gc}},y:{stacked:true,ticks:{color:tc,font:{size:10}},grid:{color:gc},border:{display:false}}}}});
+}
+
+function mkRdmImpact(){
+  const c=document.getElementById('c-rdm-impact');if(!c)return;
+  const items=['PRS API (Falta item+Inversão)','Credix API (Boleto)','Linguagem + atributos','Procedure postergação','Orientação D (cobrança NF)','Regras de horário','Fluxo cancelamento ⟳'];
+  const vals=[12,4,4,3,2,2,3];
+  const colors=[RED+'cc',AMBI+'cc',BLU+'cc',GRN+'cc',BLU+'cc',BLU+'cc',AMBI+'88'];
+  new Chart(c,{type:'bar',data:{labels:items,datasets:[{label:'Impacto estimado em pp',data:vals,backgroundColor:colors,borderWidth:0,borderRadius:4,showLabels:true,labelColor:'#334155'}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' +'+c.parsed.x+' pp estimado'},backgroundColor:'rgba(15,23,42,.9)',titleFont:{size:11},bodyFont:{size:11},padding:10}},scales:{x:{ticks:{color:tc,font:{size:10},callback:v=>'+'+v+' pp'},grid:{color:gc},border:{display:false}},y:{ticks:{color:tc,font:{size:10,family:'Inter'}},grid:{display:false},border:{display:false}}}}});
+}
+
+/* ════ INIT ════ */
+function init(){
+  const sg=STATS.geral,s1=STATS.s1,s2=STATS.s2,s3=STATS.s3;
+  mkKPI('kpi-geral',[
+    {label:'Retenção Junho',value:sg.ret.toFixed(1)+'%',accent:sg.ret>=60?'green':'red',val:sg.ret>=60?'green':'red',sub:'Meta M0: 60% · Gap: −'+(60-sg.ret).toFixed(1)+' pp · 1.469/2.975'},
+    {label:'CSAT Tiago Junho',value:sg.csat.toFixed(1)+'%',accent:sg.csat>=80?'green':'amber',val:sg.csat>=80?'green':'amber',sub:'Meta: 80% · Gap: −'+(80-sg.csat).toFixed(1)+' pp · 234 avaliações'},
+    {label:'Total tickets',value:sg.tot.toLocaleString('pt-BR'),accent:'slate',sub:'Excl. Comercial, KA, Motoristas'},
+    {label:'Tickets FIN',value:sg.fin.toLocaleString('pt-BR'),accent:'blue',val:'blue',sub:(sg.fin/sg.tot*100).toFixed(1)+'% do total'},
+    {label:'OTIF médio Junho',value:'95,1%',accent:'green',val:'green',sub:'S1: 94,6% · S2: 95,4% · S3: 95,4%'}
+  ]);
+  mkProg('prog-fill-geral','prog-val-geral',sg.ret);
+  mkGeralTL();mkGeralMot();mkGeralVol();mkDOW();
+
+  const d12=s1.ret;
+  mkKPI('kpi-s1',[
+    {label:'Retenção S1',value:s1.ret.toFixed(1)+'%',accent:'red',val:'red',sub:'Meta: 60% · Gap: −'+(60-s1.ret).toFixed(1)+' pp · 461/999'},
+    {label:'CSAT Tiago S1',value:s1.csat.toFixed(1)+'%',accent:s1.csat>=80?'green':'amber',val:s1.csat>=80?'green':'amber',sub:'Meta: 80% · 74 avaliações'},
+    {label:'Total tickets S1',value:s1.tot.toLocaleString('pt-BR'),accent:'slate',sub:'01–07/jun · 7 dias'},
+    {label:'OTIF S1',value:s1.otif.toFixed(1)+'%',accent:'green',val:'green',sub:'Base: ~12.056 pedidos'}
+  ]);
+  mkProg('prog-fill-s1','prog-val-s1',s1.ret);
+  mkDayChart('c-s1-day',WEEKS.s1,true);mkVolChart('c-s1-vol',WEEKS.s1);mkMotChart('c-s1-mot',WEEKS.s1);mkTable('t-s1',WEEKS.s1);
+
+  const d21=s2.ret-s1.ret;
+  mkKPI('kpi-s2',[
+    {label:'Retenção S2',value:s2.ret.toFixed(1)+'%',accent:s2.ret>=60?'green':'amber',val:s2.ret>=60?'green':'amber',delta:{up:d21>=0,text:(d21>=0?'+':'')+d21.toFixed(1)+' pp vs S1'},sub:'Meta: 60% · 525/1.017'},
+    {label:'CSAT Tiago S2',value:s2.csat.toFixed(1)+'%',accent:s2.csat>=80?'green':'amber',val:s2.csat>=80?'green':'amber',sub:'Melhor semana · Meta: 80% · 84 avaliações'},
+    {label:'Total tickets S2',value:s2.tot.toLocaleString('pt-BR'),accent:'slate',sub:'08–14/jun · 7 dias'},
+    {label:'OTIF S2',value:s2.otif.toFixed(1)+'%',accent:'green',val:'green',sub:'Base: 14.066 pedidos'}
+  ]);
+  mkProg('prog-fill-s2','prog-val-s2',s2.ret);
+  mkDayChart('c-s2-day',WEEKS.s2,true);mkVolChart('c-s2-vol',WEEKS.s2);mkMotChart('c-s2-mot',WEEKS.s2);mkTable('t-s2',WEEKS.s2);
+
+  const d32=s3.ret-s2.ret;
+  mkKPI('kpi-s3',[
+    {label:'Retenção S3',value:s3.ret.toFixed(1)+'%',accent:s3.ret>=60?'green':'amber',val:s3.ret>=60?'green':'amber',delta:{up:d32>=0,text:(d32>=0?'+':'')+Math.abs(d32).toFixed(1)+' pp vs S2'},sub:'Meta: 60% · 487/959'},
+    {label:'CSAT Tiago S3',value:s3.csat.toFixed(1)+'%',accent:s3.csat>=80?'green':'amber',val:s3.csat>=80?'green':'amber',sub:'Meta: 80% · 76 avaliações'},
+    {label:'Total tickets S3',value:s3.tot.toLocaleString('pt-BR'),accent:'slate',sub:'15–20/jun · 6 dias'},
+    {label:'OTIF S3',value:s3.otif.toFixed(1)+'%',accent:'green',val:'green',sub:'Base: 14.698 pedidos'}
+  ]);
+  mkProg('prog-fill-s3','prog-val-s3',s3.ret);
+  mkDayChart('c-s3-day',WEEKS.s3,true);mkVolChart('c-s3-vol',WEEKS.s3);mkMotChart('c-s3-mot',WEEKS.s3);mkTable('t-s3',WEEKS.s3);
+
+  mkRdmImpact();
+}
+
+function switchMonth(m,btn){
+  document.querySelectorAll('.month-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  const mj=document.getElementById('main-junho'),wb=document.getElementById('week-bar');
+  const mjul=document.getElementById('main-julho');
+  document.getElementById('ph-agosto').style.display='none';
+  if(m==='junho'){
+    mj.style.display='';wb.style.display='';
+    if(mjul)mjul.style.display='none';
+  } else if(m==='julho'){
+    mj.style.display='none';wb.style.display='none';
+    if(mjul)mjul.style.display='block';
+  } else {
+    mj.style.display='none';wb.style.display='none';
+    if(mjul)mjul.style.display='none';
+    document.getElementById('ph-'+m).style.display='block';
+  }
+}
+function switchWeek(w,btn){
+  document.querySelectorAll('.week-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.week-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+w).classList.add('active');
+}
+window.addEventListener('DOMContentLoaded',init);
+
+
+/* ════ DADOS S4 + JULHO ════ */
+const RAW_S4=[{"dia": "2026-06-22", "time": "N2", "macromotivo": "Problemas de Log\u00edstica", "subcategoria": "Falta de item", "tickets": 11, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-22", "time": "N2", "macromotivo": "Problemas de Log\u00edstica", "subcategoria": "Invers\u00e3o de produto", "tickets": 6, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-22", "time": "N2", "macromotivo": "Status de entrega", "subcategoria": "N\u00e3o reconhecimento da entrega", "tickets": 5, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-22", "time": "N2", "macromotivo": "Pagamento", "subcategoria": "Boleto em atraso", "tickets": 5, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-22", "time": "N2", "macromotivo": "Cr\u00e9dito", "subcategoria": "Limite removido / suspenso", "tickets": 4, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-22", "time": "N2", "macromotivo": "Pagamento", "subcategoria": "Solicita\u00e7\u00e3o de 2\u00aa via", "tickets": 4, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-22", "time": "N2", "macromotivo": "Pedido", "subcategoria": "Cancelamento de pedido", "tickets": 4, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-22", "time": "N2", "macromotivo": "Pagamento", "subcategoria": "Cobran\u00e7a indevida", "tickets": 4, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-22", "time": "N2", "macromotivo": "Avaria de produto", "subcategoria": "Produto fora de padr\u00e3o", "tickets": 3, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-22", "time": "N2", "macromotivo": "Cr\u00e9dito", "subcategoria": "Aumento de limite", "tickets": 3, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-22", "time": "N2", "macromotivo": "Status de entrega", "subcategoria": "Confirma\u00e7\u00e3o de status", "tickets": 3, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-22", "time": "N2", "macromotivo": "Cr\u00e9dito", "subcategoria": "Aumento de prazo", "tickets": 3, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-22", "time": "N2", "macromotivo": "Avaria de produto", "subcategoria": "Embalagem danificada", "tickets": 3, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-22", "time": "N2", "macromotivo": "Status de entrega", "subcategoria": "Atraso na entrega", "tickets": 3, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-22", "time": "Fin", "macromotivo": "Cr\u00e9dito", "subcategoria": "Aumento de limite", "tickets": 6, "fin": 6, "csat_pos": 1, "csat_total": 1}, {"dia": "2026-06-22", "time": "Fin", "macromotivo": "Cr\u00e9dito", "subcategoria": "Aumento de prazo", "tickets": 2, "fin": 2, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-22", "time": "Fin", "macromotivo": "Dados cadastrais", "subcategoria": "Valida\u00e7\u00e3o de CNPJ", "tickets": 2, "fin": 2, "csat_pos": 0, "csat_total": 1}, {"dia": "2026-06-22", "time": "Fin", "macromotivo": "D\u00favidas gerais sobre a Praso", "subcategoria": "Informa\u00e7\u00e3o sobre produto", "tickets": 6, "fin": 6, "csat_pos": 2, "csat_total": 2}, {"dia": "2026-06-22", "time": "Fin", "macromotivo": "D\u00favidas gerais sobre a Praso", "subcategoria": "Como fazer pedido", "tickets": 3, "fin": 3, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-22", "time": "Fin", "macromotivo": "Pagamento", "subcategoria": "Boleto em atraso", "tickets": 5, "fin": 5, "csat_pos": 1, "csat_total": 1}, {"dia": "2026-06-22", "time": "Fin", "macromotivo": "Pagamento", "subcategoria": "Confirma\u00e7\u00e3o de pagamento", "tickets": 3, "fin": 3, "csat_pos": 1, "csat_total": 1}, {"dia": "2026-06-22", "time": "Fin", "macromotivo": "Pedido", "subcategoria": "Cancelamento de pedido", "tickets": 6, "fin": 6, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-22", "time": "Fin", "macromotivo": "Pedido", "subcategoria": "Adicionar item", "tickets": 3, "fin": 3, "csat_pos": 1, "csat_total": 1}, {"dia": "2026-06-22", "time": "Fin", "macromotivo": "Problemas de Log\u00edstica", "subcategoria": "Invers\u00e3o de produto", "tickets": 2, "fin": 2, "csat_pos": 1, "csat_total": 1}, {"dia": "2026-06-22", "time": "Fin", "macromotivo": "Problemas t\u00e9cnicos com o app", "subcategoria": "Erro n\u00e3o identificado", "tickets": 5, "fin": 5, "csat_pos": 1, "csat_total": 1}, {"dia": "2026-06-22", "time": "Fin", "macromotivo": "Status de entrega", "subcategoria": "Confirma\u00e7\u00e3o de status", "tickets": 9, "fin": 9, "csat_pos": 1, "csat_total": 1}, {"dia": "2026-06-22", "time": "Fin", "macromotivo": "Status de entrega", "subcategoria": "N\u00e3o reconhecimento da entrega", "tickets": 3, "fin": 3, "csat_pos": 1, "csat_total": 1}, {"dia": "2026-06-22", "time": "Fora do hor\u00e1rio", "macromotivo": "Problemas de Log\u00edstica", "subcategoria": "Invers\u00e3o de produto", "tickets": 3, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-23", "time": "N2", "macromotivo": "Problemas de Log\u00edstica", "subcategoria": "Falta de item", "tickets": 15, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-23", "time": "N2", "macromotivo": "Problemas de Log\u00edstica", "subcategoria": "Invers\u00e3o de produto", "tickets": 9, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-23", "time": "N2", "macromotivo": "Pedido", "subcategoria": "Cancelamento de pedido", "tickets": 6, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-23", "time": "N2", "macromotivo": "Status de entrega", "subcategoria": "Confirma\u00e7\u00e3o de status", "tickets": 5, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-23", "time": "N2", "macromotivo": "Status de entrega", "subcategoria": "N\u00e3o reconhecimento da entrega", "tickets": 4, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-23", "time": "Fin", "macromotivo": "Cr\u00e9dito", "subcategoria": "Limite removido / suspenso", "tickets": 6, "fin": 6, "csat_pos": 1, "csat_total": 1}, {"dia": "2026-06-23", "time": "Fin", "macromotivo": "D\u00favidas gerais sobre a Praso", "subcategoria": "Como fazer pedido", "tickets": 3, "fin": 3, "csat_pos": 1, "csat_total": 1}, {"dia": "2026-06-23", "time": "Fin", "macromotivo": "Pagamento", "subcategoria": "Pagamento n\u00e3o reconhecido", "tickets": 4, "fin": 4, "csat_pos": 0, "csat_total": 1}, {"dia": "2026-06-23", "time": "Fin", "macromotivo": "Pedido", "subcategoria": "Cancelamento de pedido", "tickets": 3, "fin": 3, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-23", "time": "Fin", "macromotivo": "Problemas t\u00e9cnicos com o app", "subcategoria": "Autentica\u00e7\u00e3o / login", "tickets": 2, "fin": 2, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-23", "time": "Fin", "macromotivo": "Status de entrega", "subcategoria": "Confirma\u00e7\u00e3o de status", "tickets": 12, "fin": 12, "csat_pos": 3, "csat_total": 3}, {"dia": "2026-06-23", "time": "Fin", "macromotivo": "Status de entrega", "subcategoria": "Atraso na entrega", "tickets": 3, "fin": 3, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-23", "time": "Fin", "macromotivo": "Status de entrega", "subcategoria": "N\u00e3o reconhecimento da entrega", "tickets": 3, "fin": 3, "csat_pos": 1, "csat_total": 2}, {"dia": "2026-06-23", "time": "Fora do hor\u00e1rio", "macromotivo": "Problemas de Log\u00edstica", "subcategoria": "Falta de item", "tickets": 2, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-24", "time": "N2", "macromotivo": "Pedido", "subcategoria": "Cancelamento de pedido", "tickets": 5, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-24", "time": "N2", "macromotivo": "Problemas de Log\u00edstica", "subcategoria": "Falta de item", "tickets": 5, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-24", "time": "N2", "macromotivo": "Avaria de produto", "subcategoria": "Produto fora de padr\u00e3o", "tickets": 3, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-24", "time": "N2", "macromotivo": "Problemas de Log\u00edstica", "subcategoria": "Invers\u00e3o de produto", "tickets": 2, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-24", "time": "Fin", "macromotivo": "Cr\u00e9dito", "subcategoria": "Aumento de limite", "tickets": 4, "fin": 4, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-24", "time": "Fin", "macromotivo": "Dados cadastrais", "subcategoria": "Valida\u00e7\u00e3o de CNPJ", "tickets": 6, "fin": 6, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-24", "time": "Fin", "macromotivo": "Dados cadastrais", "subcategoria": "Endere\u00e7o", "tickets": 2, "fin": 2, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-24", "time": "Fin", "macromotivo": "Pagamento", "subcategoria": "(sem subcategoria)", "tickets": 4, "fin": 4, "csat_pos": 1, "csat_total": 1}, {"dia": "2026-06-24", "time": "Fin", "macromotivo": "Pedido", "subcategoria": "Cancelamento de pedido", "tickets": 2, "fin": 2, "csat_pos": 1, "csat_total": 2}, {"dia": "2026-06-24", "time": "Fin", "macromotivo": "Problemas t\u00e9cnicos com o app", "subcategoria": "Autentica\u00e7\u00e3o / login", "tickets": 3, "fin": 3, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-24", "time": "Fin", "macromotivo": "Status de entrega", "subcategoria": "Confirma\u00e7\u00e3o de status", "tickets": 3, "fin": 3, "csat_pos": 1, "csat_total": 1}, {"dia": "2026-06-25", "time": "N2", "macromotivo": "Problemas de Log\u00edstica", "subcategoria": "Falta de item", "tickets": 20, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-25", "time": "N2", "macromotivo": "Pedido", "subcategoria": "Cancelamento de pedido", "tickets": 8, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-25", "time": "N2", "macromotivo": "Problemas de Log\u00edstica", "subcategoria": "Invers\u00e3o de produto", "tickets": 8, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-25", "time": "N2", "macromotivo": "Status de entrega", "subcategoria": "N\u00e3o reconhecimento da entrega", "tickets": 7, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-25", "time": "Fin", "macromotivo": "Cr\u00e9dito", "subcategoria": "Limite removido / suspenso", "tickets": 6, "fin": 6, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-25", "time": "Fin", "macromotivo": "Cr\u00e9dito", "subcategoria": "Consulta de limite dispon\u00edvel", "tickets": 4, "fin": 4, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-25", "time": "Fin", "macromotivo": "Pagamento", "subcategoria": "(sem subcategoria)", "tickets": 7, "fin": 7, "csat_pos": 1, "csat_total": 1}, {"dia": "2026-06-25", "time": "Fin", "macromotivo": "Pagamento", "subcategoria": "Solicita\u00e7\u00e3o de 2\u00aa via", "tickets": 6, "fin": 6, "csat_pos": 4, "csat_total": 4}, {"dia": "2026-06-25", "time": "Fin", "macromotivo": "Pagamento", "subcategoria": "Boleto em atraso", "tickets": 4, "fin": 4, "csat_pos": 2, "csat_total": 2}, {"dia": "2026-06-25", "time": "Fin", "macromotivo": "Pedido", "subcategoria": "Cancelamento de pedido", "tickets": 6, "fin": 6, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-25", "time": "Fin", "macromotivo": "Problemas t\u00e9cnicos com o app", "subcategoria": "Autentica\u00e7\u00e3o / login", "tickets": 4, "fin": 4, "csat_pos": 1, "csat_total": 1}, {"dia": "2026-06-25", "time": "Fin", "macromotivo": "Status de entrega", "subcategoria": "Confirma\u00e7\u00e3o de status", "tickets": 11, "fin": 11, "csat_pos": 1, "csat_total": 2}, {"dia": "2026-06-25", "time": "Fora do hor\u00e1rio", "macromotivo": "Pagamento", "subcategoria": "Solicita\u00e7\u00e3o de 2\u00aa via", "tickets": 2, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-25", "time": "Fora do hor\u00e1rio", "macromotivo": "Problemas de Log\u00edstica", "subcategoria": "Falta de item", "tickets": 2, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-26", "time": "N2", "macromotivo": "Problemas de Log\u00edstica", "subcategoria": "Falta de item", "tickets": 11, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-26", "time": "N2", "macromotivo": "Problemas de Log\u00edstica", "subcategoria": "Invers\u00e3o de produto", "tickets": 9, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-26", "time": "N2", "macromotivo": "Avaria de produto", "subcategoria": "Produto fora de padr\u00e3o", "tickets": 5, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-26", "time": "N2", "macromotivo": "Pagamento", "subcategoria": "Boleto em atraso", "tickets": 5, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-26", "time": "N2", "macromotivo": "Pedido", "subcategoria": "Cancelamento de pedido", "tickets": 5, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-26", "time": "Fin", "macromotivo": "Dados cadastrais", "subcategoria": "(sem subcategoria)", "tickets": 6, "fin": 6, "csat_pos": 1, "csat_total": 1}, {"dia": "2026-06-26", "time": "Fin", "macromotivo": "Dados cadastrais", "subcategoria": "Valida\u00e7\u00e3o de CNPJ", "tickets": 5, "fin": 5, "csat_pos": 1, "csat_total": 1}, {"dia": "2026-06-26", "time": "Fin", "macromotivo": "D\u00favidas gerais sobre a Praso", "subcategoria": "Informa\u00e7\u00e3o sobre produto", "tickets": 4, "fin": 4, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-26", "time": "Fin", "macromotivo": "Pagamento", "subcategoria": "Boleto em atraso", "tickets": 9, "fin": 9, "csat_pos": 0, "csat_total": 1}, {"dia": "2026-06-26", "time": "Fin", "macromotivo": "Pagamento", "subcategoria": "Pagamento n\u00e3o reconhecido", "tickets": 5, "fin": 5, "csat_pos": 1, "csat_total": 1}, {"dia": "2026-06-26", "time": "Fin", "macromotivo": "Pedido", "subcategoria": "(sem subcategoria)", "tickets": 8, "fin": 8, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-26", "time": "Fin", "macromotivo": "Pedido", "subcategoria": "Cancelamento de pedido", "tickets": 6, "fin": 6, "csat_pos": 2, "csat_total": 2}, {"dia": "2026-06-26", "time": "Fin", "macromotivo": "Problemas t\u00e9cnicos com o app", "subcategoria": "Autentica\u00e7\u00e3o / login", "tickets": 8, "fin": 8, "csat_pos": 2, "csat_total": 3}, {"dia": "2026-06-26", "time": "Fin", "macromotivo": "Status de entrega", "subcategoria": "Confirma\u00e7\u00e3o de status", "tickets": 7, "fin": 7, "csat_pos": 3, "csat_total": 4}, {"dia": "2026-06-26", "time": "Fora do hor\u00e1rio", "macromotivo": "Status de entrega", "subcategoria": "N\u00e3o reconhecimento da entrega", "tickets": 2, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-27", "time": "N2", "macromotivo": "Problemas de Log\u00edstica", "subcategoria": "Invers\u00e3o de produto", "tickets": 5, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-27", "time": "N2", "macromotivo": "Problemas de Log\u00edstica", "subcategoria": "Falta de item", "tickets": 4, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-27", "time": "N2", "macromotivo": "Status de entrega", "subcategoria": "N\u00e3o reconhecimento da entrega", "tickets": 3, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-27", "time": "Fin", "macromotivo": "Dados cadastrais", "subcategoria": "Endere\u00e7o", "tickets": 2, "fin": 2, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-27", "time": "Fin", "macromotivo": "Pagamento", "subcategoria": "Boleto em atraso", "tickets": 2, "fin": 2, "csat_pos": 0, "csat_total": 1}, {"dia": "2026-06-27", "time": "Fin", "macromotivo": "Pedido", "subcategoria": "Cancelamento de pedido", "tickets": 2, "fin": 2, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-27", "time": "Fin", "macromotivo": "Problemas t\u00e9cnicos com o app", "subcategoria": "Autentica\u00e7\u00e3o / login", "tickets": 6, "fin": 6, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-27", "time": "Fin", "macromotivo": "Status de entrega", "subcategoria": "N\u00e3o reconhecimento da entrega", "tickets": 4, "fin": 4, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-27", "time": "Fin", "macromotivo": "Status de entrega", "subcategoria": "Confirma\u00e7\u00e3o de status", "tickets": 4, "fin": 4, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-27", "time": "Fora do hor\u00e1rio", "macromotivo": "Problemas de Log\u00edstica", "subcategoria": "Falta de item", "tickets": 3, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-27", "time": "Fora do hor\u00e1rio", "macromotivo": "Status de entrega", "subcategoria": "N\u00e3o reconhecimento da entrega", "tickets": 3, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-28", "time": "Fin", "macromotivo": "Cr\u00e9dito", "subcategoria": "Consulta de limite dispon\u00edvel", "tickets": 2, "fin": 2, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-28", "time": "Fin", "macromotivo": "Dados cadastrais", "subcategoria": "Valida\u00e7\u00e3o de CNPJ", "tickets": 2, "fin": 2, "csat_pos": 1, "csat_total": 1}, {"dia": "2026-06-28", "time": "Fin", "macromotivo": "D\u00favidas gerais sobre a Praso", "subcategoria": "Como fazer pedido", "tickets": 2, "fin": 2, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-28", "time": "Fin", "macromotivo": "Pagamento", "subcategoria": "Boleto em atraso", "tickets": 2, "fin": 2, "csat_pos": 1, "csat_total": 1}, {"dia": "2026-06-28", "time": "Fin", "macromotivo": "Problemas t\u00e9cnicos com o app", "subcategoria": "Autentica\u00e7\u00e3o / login", "tickets": 8, "fin": 8, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-28", "time": "Fin", "macromotivo": "Status de entrega", "subcategoria": "Altera\u00e7\u00e3o de delivery date", "tickets": 2, "fin": 2, "csat_pos": 1, "csat_total": 1}, {"dia": "2026-06-28", "time": "Fora do hor\u00e1rio", "macromotivo": "Problemas t\u00e9cnicos com o app", "subcategoria": "Autentica\u00e7\u00e3o / login", "tickets": 2, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-29", "time": "N2", "macromotivo": "Problemas de Log\u00edstica", "subcategoria": "Invers\u00e3o de produto", "tickets": 6, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-29", "time": "N2", "macromotivo": "Status de entrega", "subcategoria": "N\u00e3o reconhecimento da entrega", "tickets": 4, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-29", "time": "N2", "macromotivo": "Pagamento", "subcategoria": "Solicita\u00e7\u00e3o de 2\u00aa via", "tickets": 4, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-29", "time": "N2", "macromotivo": "Problemas de Log\u00edstica", "subcategoria": "Falta de item", "tickets": 4, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-29", "time": "N2", "macromotivo": "Pedido", "subcategoria": "Cancelamento de pedido", "tickets": 3, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-29", "time": "N2", "macromotivo": "Pagamento", "subcategoria": "Cobran\u00e7a indevida", "tickets": 3, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-29", "time": "N2", "macromotivo": "Avaria de produto", "subcategoria": "Embalagem danificada", "tickets": 3, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-29", "time": "Fin", "macromotivo": "Dados cadastrais", "subcategoria": "Telefone", "tickets": 4, "fin": 4, "csat_pos": 1, "csat_total": 2}, {"dia": "2026-06-29", "time": "Fin", "macromotivo": "D\u00favidas gerais sobre a Praso", "subcategoria": "Como fazer pedido", "tickets": 3, "fin": 3, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-29", "time": "Fin", "macromotivo": "Pagamento", "subcategoria": "Confirma\u00e7\u00e3o de pagamento", "tickets": 3, "fin": 3, "csat_pos": 2, "csat_total": 2}, {"dia": "2026-06-29", "time": "Fin", "macromotivo": "Pedido", "subcategoria": "(sem subcategoria)", "tickets": 5, "fin": 5, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-29", "time": "Fin", "macromotivo": "Problemas t\u00e9cnicos com o app", "subcategoria": "Autentica\u00e7\u00e3o / login", "tickets": 8, "fin": 8, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-29", "time": "Fin", "macromotivo": "Problemas t\u00e9cnicos com o app", "subcategoria": "Lentid\u00e3o / travamento", "tickets": 3, "fin": 3, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-29", "time": "Fin", "macromotivo": "Status de entrega", "subcategoria": "Confirma\u00e7\u00e3o de status", "tickets": 4, "fin": 4, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-29", "time": "Fin", "macromotivo": "Status de entrega", "subcategoria": "Atraso na entrega", "tickets": 3, "fin": 3, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-30", "time": "N2", "macromotivo": "Problemas de Log\u00edstica", "subcategoria": "Falta de item", "tickets": 13, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-30", "time": "N2", "macromotivo": "Problemas de Log\u00edstica", "subcategoria": "Invers\u00e3o de produto", "tickets": 8, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-30", "time": "N2", "macromotivo": "Pagamento", "subcategoria": "Boleto em atraso", "tickets": 7, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-30", "time": "N2", "macromotivo": "Status de entrega", "subcategoria": "Atraso na entrega", "tickets": 6, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-30", "time": "N2", "macromotivo": "Status de entrega", "subcategoria": "N\u00e3o reconhecimento da entrega", "tickets": 5, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-30", "time": "N2", "macromotivo": "Avaria de produto", "subcategoria": "Produto fora de padr\u00e3o", "tickets": 5, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-30", "time": "Fin", "macromotivo": "Cr\u00e9dito", "subcategoria": "Aumento de prazo", "tickets": 3, "fin": 3, "csat_pos": 2, "csat_total": 2}, {"dia": "2026-06-30", "time": "Fin", "macromotivo": "Dados cadastrais", "subcategoria": "Valida\u00e7\u00e3o de CNPJ", "tickets": 4, "fin": 4, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-30", "time": "Fin", "macromotivo": "D\u00favidas gerais sobre a Praso", "subcategoria": "Como fazer pedido", "tickets": 4, "fin": 4, "csat_pos": 2, "csat_total": 2}, {"dia": "2026-06-30", "time": "Fin", "macromotivo": "Pagamento", "subcategoria": "Boleto em atraso", "tickets": 10, "fin": 10, "csat_pos": 4, "csat_total": 4}, {"dia": "2026-06-30", "time": "Fin", "macromotivo": "Pedido", "subcategoria": "Cancelamento de pedido", "tickets": 9, "fin": 9, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-06-30", "time": "Fin", "macromotivo": "Problemas t\u00e9cnicos com o app", "subcategoria": "Autentica\u00e7\u00e3o / login", "tickets": 6, "fin": 6, "csat_pos": 0, "csat_total": 1}, {"dia": "2026-06-30", "time": "Fin", "macromotivo": "Status de entrega", "subcategoria": "Confirma\u00e7\u00e3o de status", "tickets": 4, "fin": 4, "csat_pos": 1, "csat_total": 1}, {"dia": "2026-07-01", "time": "N2", "macromotivo": "Problemas de Log\u00edstica", "subcategoria": "Falta de item", "tickets": 11, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-07-01", "time": "Fin", "macromotivo": "Cr\u00e9dito", "subcategoria": "Consulta de limite dispon\u00edvel", "tickets": 7, "fin": 7, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-07-01", "time": "Fin", "macromotivo": "Dados cadastrais", "subcategoria": "(sem subcategoria)", "tickets": 6, "fin": 6, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-07-01", "time": "Fin", "macromotivo": "Dados cadastrais", "subcategoria": "Valida\u00e7\u00e3o de CNPJ", "tickets": 4, "fin": 4, "csat_pos": 1, "csat_total": 1}, {"dia": "2026-07-01", "time": "Fin", "macromotivo": "D\u00favidas gerais sobre a Praso", "subcategoria": "Regi\u00e3o de entrega", "tickets": 4, "fin": 4, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-07-01", "time": "Fin", "macromotivo": "Pagamento", "subcategoria": "(sem subcategoria)", "tickets": 4, "fin": 4, "csat_pos": 1, "csat_total": 1}, {"dia": "2026-07-01", "time": "Fin", "macromotivo": "Pagamento", "subcategoria": "Boleto em atraso", "tickets": 3, "fin": 3, "csat_pos": 1, "csat_total": 1}, {"dia": "2026-07-01", "time": "Fin", "macromotivo": "Pedido", "subcategoria": "Cancelamento de pedido", "tickets": 5, "fin": 5, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-07-01", "time": "Fin", "macromotivo": "Problemas t\u00e9cnicos com o app", "subcategoria": "Autentica\u00e7\u00e3o / login", "tickets": 8, "fin": 8, "csat_pos": 0, "csat_total": 1}, {"dia": "2026-07-01", "time": "Fin", "macromotivo": "Problemas t\u00e9cnicos com o app", "subcategoria": "Lentid\u00e3o / travamento", "tickets": 5, "fin": 5, "csat_pos": 1, "csat_total": 1}, {"dia": "2026-07-01", "time": "Fin", "macromotivo": "Status de entrega", "subcategoria": "Confirma\u00e7\u00e3o de status", "tickets": 5, "fin": 5, "csat_pos": 1, "csat_total": 1}, {"dia": "2026-07-01", "time": "Fin", "macromotivo": "Status de entrega", "subcategoria": "Atraso na entrega", "tickets": 4, "fin": 4, "csat_pos": 1, "csat_total": 1}, {"dia": "2026-07-01", "time": "Fora do hor\u00e1rio", "macromotivo": "Problemas de Log\u00edstica", "subcategoria": "Falta de item", "tickets": 3, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-07-02", "time": "N2", "macromotivo": "Problemas de Log\u00edstica", "subcategoria": "Falta de item", "tickets": 12, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-07-02", "time": "N2", "macromotivo": "Pagamento", "subcategoria": "Cobran\u00e7a indevida", "tickets": 6, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-07-02", "time": "N2", "macromotivo": "Status de entrega", "subcategoria": "N\u00e3o reconhecimento da entrega", "tickets": 5, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-07-02", "time": "Fin", "macromotivo": "Cr\u00e9dito", "subcategoria": "Consulta de limite dispon\u00edvel", "tickets": 8, "fin": 8, "csat_pos": 1, "csat_total": 2}, {"dia": "2026-07-02", "time": "Fin", "macromotivo": "Dados cadastrais", "subcategoria": "Endere\u00e7o", "tickets": 4, "fin": 4, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-07-02", "time": "Fin", "macromotivo": "Dados cadastrais", "subcategoria": "Valida\u00e7\u00e3o de CNPJ", "tickets": 3, "fin": 3, "csat_pos": 1, "csat_total": 1}, {"dia": "2026-07-02", "time": "Fin", "macromotivo": "Pagamento", "subcategoria": "Pagamento n\u00e3o reconhecido", "tickets": 6, "fin": 6, "csat_pos": 1, "csat_total": 1}, {"dia": "2026-07-02", "time": "Fin", "macromotivo": "Pagamento", "subcategoria": "Boleto em atraso", "tickets": 5, "fin": 5, "csat_pos": 0, "csat_total": 1}, {"dia": "2026-07-02", "time": "Fin", "macromotivo": "Pedido", "subcategoria": "(sem subcategoria)", "tickets": 7, "fin": 7, "csat_pos": 2, "csat_total": 3}, {"dia": "2026-07-02", "time": "Fin", "macromotivo": "Problemas t\u00e9cnicos com o app", "subcategoria": "Autentica\u00e7\u00e3o / login", "tickets": 9, "fin": 9, "csat_pos": 1, "csat_total": 1}, {"dia": "2026-07-02", "time": "Fin", "macromotivo": "Status de entrega", "subcategoria": "Confirma\u00e7\u00e3o de status", "tickets": 7, "fin": 7, "csat_pos": 1, "csat_total": 1}, {"dia": "2026-07-03", "time": "N2", "macromotivo": "Problemas de Log\u00edstica", "subcategoria": "Falta de item", "tickets": 12, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-07-03", "time": "N2", "macromotivo": "Avaria de produto", "subcategoria": "Produto fora de padr\u00e3o", "tickets": 5, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-07-03", "time": "Fin", "macromotivo": "Cr\u00e9dito", "subcategoria": "Aumento de limite", "tickets": 3, "fin": 3, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-07-03", "time": "Fin", "macromotivo": "Dados cadastrais", "subcategoria": "Valida\u00e7\u00e3o de CNPJ", "tickets": 8, "fin": 8, "csat_pos": 0, "csat_total": 1}, {"dia": "2026-07-03", "time": "Fin", "macromotivo": "Dados cadastrais", "subcategoria": "Altera\u00e7\u00e3o de raz\u00e3o social / CNPJ", "tickets": 4, "fin": 4, "csat_pos": 0, "csat_total": 1}, {"dia": "2026-07-03", "time": "Fin", "macromotivo": "Pagamento", "subcategoria": "(sem subcategoria)", "tickets": 6, "fin": 6, "csat_pos": 2, "csat_total": 2}, {"dia": "2026-07-03", "time": "Fin", "macromotivo": "Pedido", "subcategoria": "Cancelamento de pedido", "tickets": 6, "fin": 6, "csat_pos": 1, "csat_total": 1}, {"dia": "2026-07-03", "time": "Fin", "macromotivo": "Problemas t\u00e9cnicos com o app", "subcategoria": "Autentica\u00e7\u00e3o / login", "tickets": 4, "fin": 4, "csat_pos": 1, "csat_total": 1}, {"dia": "2026-07-03", "time": "Fin", "macromotivo": "Status de entrega", "subcategoria": "Confirma\u00e7\u00e3o de status", "tickets": 6, "fin": 6, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-07-03", "time": "Fora do hor\u00e1rio", "macromotivo": "Avaria de produto", "subcategoria": "Produto fora de padr\u00e3o", "tickets": 4, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-07-03", "time": "Fora do hor\u00e1rio", "macromotivo": "Problemas de Log\u00edstica", "subcategoria": "Invers\u00e3o de produto", "tickets": 3, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-07-04", "time": "N2", "macromotivo": "Problemas de Log\u00edstica", "subcategoria": "Falta de item", "tickets": 4, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-07-04", "time": "N2", "macromotivo": "Status de entrega", "subcategoria": "N\u00e3o reconhecimento da entrega", "tickets": 3, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-07-04", "time": "N2", "macromotivo": "Status de entrega", "subcategoria": "Atraso na entrega", "tickets": 3, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-07-04", "time": "Fin", "macromotivo": "Dados cadastrais", "subcategoria": "Valida\u00e7\u00e3o de CNPJ", "tickets": 3, "fin": 3, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-07-04", "time": "Fin", "macromotivo": "Dados cadastrais", "subcategoria": "(sem subcategoria)", "tickets": 3, "fin": 3, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-07-04", "time": "Fin", "macromotivo": "D\u00favidas gerais sobre a Praso", "subcategoria": "Suporte comercial", "tickets": 2, "fin": 2, "csat_pos": 2, "csat_total": 2}, {"dia": "2026-07-04", "time": "Fin", "macromotivo": "Pagamento", "subcategoria": "(sem subcategoria)", "tickets": 5, "fin": 5, "csat_pos": 0, "csat_total": 2}, {"dia": "2026-07-04", "time": "Fin", "macromotivo": "Pedido", "subcategoria": "Cancelamento de pedido", "tickets": 2, "fin": 2, "csat_pos": 2, "csat_total": 2}, {"dia": "2026-07-04", "time": "Fin", "macromotivo": "Status de entrega", "subcategoria": "Confirma\u00e7\u00e3o de status", "tickets": 4, "fin": 4, "csat_pos": 0, "csat_total": 1}, {"dia": "2026-07-04", "time": "Fora do hor\u00e1rio", "macromotivo": "Problemas de Log\u00edstica", "subcategoria": "Invers\u00e3o de produto", "tickets": 2, "fin": 0, "csat_pos": 0, "csat_total": 0}, {"dia": "2026-07-04", "time": "Fora do hor\u00e1rio", "macromotivo": "Problemas de Log\u00edstica", "subcategoria": "Falta de item", "tickets": 2, "fin": 0, "csat_pos": 0, "csat_total": 0}];
+const WEEKS_EXT={
+  s4:['2026-06-22','2026-06-23','2026-06-24','2026-06-25','2026-06-26','2026-06-27','2026-06-28'],
+  jul:['2026-06-29','2026-06-30','2026-07-01','2026-07-02','2026-07-03','2026-07-04']
+};
+const DAILY_RET_S4={"2026-06-22": 46.2, "2026-06-23": 48.1, "2026-06-24": 61.5, "2026-06-25": 50.5, "2026-06-26": 61.1, "2026-06-27": 52.6, "2026-06-28": 90.0};
+const DAILY_CSAT_S4={"2026-06-22": 90.9, "2026-06-23": 75.0, "2026-06-24": 75.0, "2026-06-25": 90.0, "2026-06-26": 76.9, "2026-06-27": null, "2026-06-28": 100.0};
+const DAILY_RET_JUL={"2026-06-29": 57.1, "2026-06-30": 47.6, "2026-07-01": 79.7, "2026-07-02": 69.3, "2026-07-03": 60.7, "2026-07-04": 57.6};
+const DAILY_CSAT_JUL={"2026-06-29": 75.0, "2026-06-30": 90.0, "2026-07-01": 85.7, "2026-07-02": 70.0, "2026-07-03": 66.7, "2026-07-04": 57.1};
+const OTIF_S4={"2026-06-22": 87.0, "2026-06-23": 88.4, "2026-06-24": 89.1, "2026-06-25": 89.5, "2026-06-26": 91.8, "2026-06-27": 92.3, "2026-06-28": null};
+const OTIF_JUL={"2026-06-29": 89.7, "2026-06-30": 91.5, "2026-07-01": 90.3, "2026-07-02": 93.3, "2026-07-03": 91.9, "2026-07-04": 91.4};
+
+const STATS_EXT={
+  s4:{ret:53.8,csat:82.0,fin:261,tot:485,csat_pos:41,csat_tot:50,otif:90.1},
+  jul:{ret:62.1,csat:75.0,fin:239,tot:385,csat_pos:33,csat_tot:44}
+};
+
+function aggMotExt(days){
+  const o={};
+  RAW_S4.forEach(r=>{
+    if(!days.includes(r.dia)||EXCL.includes(r.macromotivo))return;
+    const m=r.macromotivo||'Sem motivo';
+    if(!o[m])o[m]={fTk:0,n2Tk:0,foraTk:0,tot:0,fFin:0,cfp:0,cft:0,n2cfp:0,n2cft:0,subs:{}};
+    const b=o[m];b.tot+=r.tickets;
+    const s=r.subcategoria||'(sem subcategoria)';
+    if(!b.subs[s])b.subs[s]={tickets:0,fin:0};
+    b.subs[s].tickets+=r.tickets;b.subs[s].fin+=r.fin;
+    if(r.time==='Fin'){b.fTk+=r.tickets;b.fFin+=r.fin;b.cfp+=r.csat_pos;b.cft+=r.csat_total;}
+    else if(r.time==='N2'){b.n2Tk+=r.tickets;b.n2cfp+=r.csat_pos;b.n2cft+=r.csat_total;}
+    else b.foraTk+=r.tickets;
   });
+  return o;
 }
 
-function mkVolChart(id,mots,volf,voln){
-  const ctx=document.getElementById(id); if(!ctx)return;
-  new Chart(ctx,{type:"bar",data:{labels:mots,datasets:[
-    {label:"FIN",data:volf,backgroundColor:BLU+"cc",borderWidth:0,borderRadius:3},
-    {label:"N2",data:voln,backgroundColor:AMB+"cc",borderWidth:0}
-  ]},options:{responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{position:"top",labels:{font:{size:10},boxWidth:10,boxHeight:10}}},
-    scales:{x:{stacked:true,ticks:{font:{size:9}}},y:{stacked:true,ticks:{font:{size:9}}}}
+function mkTableExt(id,days){
+  const tbl=document.getElementById(id);if(!tbl)return;
+  const m=aggMotExt(days);
+  const sorted=Object.entries(m).sort((a,b)=>b[1].tot-a[1].tot).slice(0,10);
+  const tot=sorted.reduce((s,[,v])=>s+v.tot,0);
+  let h=`<thead><tr><th>Motivo · Subcategoria crítica (N2)</th><th class="r">Vol.</th><th class="r">Repr.</th><th class="r">Ret. Tiago</th><th class="r">CSAT Tiago</th><th class="c">Status</th></tr></thead><tbody>`;
+  sorted.forEach(([mot,v])=>{
+    const ret=v.tot?v.fFin/v.tot*100:0;
+    const csat=v.cft?v.cfp/v.cft*100:null;
+    const repr=tot?v.tot/tot*100:0;
+    const rc=ret>=60?'p-green':ret>=30?'p-amber':'p-red';
+    const cc=csat==null?'p-slate':csat>=90?'p-green':csat>=70?'p-amber':'p-red';
+    let diag,dc;
+    if(ret===0){diag='bloqueio';dc='p-red';}
+    else if(ret<30){diag='crítico';dc='p-red';}
+    else if(ret<60){diag='⚠ abaixo';dc='p-amber';}
+    else if(csat!=null&&csat<70){diag='CSAT baixo';dc='p-amber';}
+    else{diag='✓ ok';dc='p-green';}
+    const n2subs=Object.entries(v.subs).filter(([s,sv])=>sv.fin===0&&sv.tickets>0).sort((a,b)=>b[1].tickets-a[1].tickets).slice(0,1);
+    const subTxt=n2subs.length?`<br><small style="color:var(--slate-400)">N2: ${n2subs[0][0]} (${n2subs[0][1].tickets})</small>`:'';
+    h+=`<tr><td><strong style="color:var(--slate-900)">${mot}</strong>${subTxt}</td><td class="r">${v.tot}</td><td class="r">${repr.toFixed(0)}%</td><td class="r"><span class="pill ${rc}">${ret.toFixed(0)}%</span></td><td class="r"><span class="pill ${cc}">${csat!=null?csat.toFixed(0)+'%':'n/d'}</span></td><td class="c"><span class="pill ${dc}">${diag}</span></td></tr>`;
   });
+  tbl.innerHTML=h+'</tbody>';
 }
 
-// ── RENDERIZAR TODOS OS GRÁFICOS ──
+function mkDayChartExt(id,days,retMap,csatMap,otifMap){
+  const lbl=days.map(d=>{const p=d.split('-');return p[2]+'/'+p[1];});
+  const ret=days.map(d=>retMap[d]!=null?retMap[d]:null);
+  const csat=days.map(d=>csatMap[d]!=null?csatMap[d]:null);
+  const otif=days.map(d=>otifMap[d]!=null?otifMap[d]:null);
+  const c=document.getElementById(id);if(!c)return;
+  c.dataset.annot=annotStr(true,true);
+  const dsets=[barDS('OTIF%',otif,'rgba(22,163,74,.12)'),lineDS('Retenção Tiago %',ret,BLU,false,true),lineDS('CSAT Tiago %',csat,AMBI,true,true)];
+  new Chart(c,{data:{labels:lbl,datasets:dsets},options:{...BASE}});
+}
 
-mkDailyChart("c-daily-MES",MES_DIAS,MES_RET,MES_FIN,MES_N2,MES_FORA,MES_OTIF);
-mkRetChart("c-ret-MES",MES_MOTS,MES_RETM);
-mkCsatChart("c-csat-MES",MES_MOTS,MES_CSATM);
-mkVolChart("c-vol-MES",MES_MOTS,MES_VOLF,MES_VOLN);
+function mkVolChartExt(id,days){
+  const lbl=days.map(d=>{const p=d.split('-');return p[2]+'/'+p[1];});
+  const fin=days.map(d=>{let s=0;RAW_S4.forEach(r=>{if(r.dia===d&&r.time==='Fin')s+=r.tickets;});return s;});
+  const n2=days.map(d=>{let s=0;RAW_S4.forEach(r=>{if(r.dia===d&&r.time==='N2')s+=r.tickets;});return s;});
+  const fora=days.map(d=>{let s=0;RAW_S4.forEach(r=>{if(r.dia===d&&r.time==='Fora do horário')s+=r.tickets;});return s;});
+  const c=document.getElementById(id);if(!c)return;
+  new Chart(c,{type:'bar',data:{labels:lbl,datasets:[{label:'FIN',data:fin,backgroundColor:BLU+'cc',borderWidth:0,borderRadius:2},{label:'N2',data:n2,backgroundColor:AMBI+'cc',borderWidth:0},{label:'Fora',data:fora,backgroundColor:SL4+'88',borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:10}}}},scales:{x:{stacked:true,ticks:{color:tc,font:{size:10}},grid:{display:false}},y:{stacked:true,ticks:{color:tc,font:{size:10}},grid:{color:gc}}}}});
+}
 
-mkDailyChart("c-daily-S1",S1_DIAS,S1_RET,S1_FIN,S1_N2,S1_FORA,S1_OTIF);
-mkRetChart("c-ret-S1",S1_MOTS,S1_RETM);
-mkCsatChart("c-csat-S1",S1_MOTS,S1_CSATM);
-mkVolChart("c-vol-S1",S1_MOTS,S1_VOLF,S1_VOLN);
+function mkMotChartExt(id,days){
+  const m=aggMotExt(days);
+  const sorted=Object.entries(m).sort((a,b)=>b[1].tot-a[1].tot).slice(0,8);
+  const lbl=sorted.map(([mot])=>sn(mot));
+  const ret=sorted.map(([,v])=>v.tot?+(v.fFin/v.tot*100).toFixed(1):0);
+  const csat=sorted.map(([,v])=>v.cft?+(v.cfp/v.cft*100).toFixed(1):null);
+  const c=document.getElementById(id);if(!c)return;
+  c.dataset.annot=annotStr(true,true);
+  new Chart(c,{data:{labels:lbl,datasets:[{type:'bar',label:'Retenção Tiago %',data:ret,backgroundColor:ret.map(v=>v>=60?BLU+'cc':v>=30?GRN+'88':RED+'99'),borderWidth:0,borderRadius:3,showLabels:true,labelColor:'#334155'},{type:'bar',label:'CSAT Tiago %',data:csat,backgroundColor:AMBI+'88',borderWidth:0,borderRadius:3,showLabels:true,labelColor:'#78350f'}]},options:{...BASE,scales:{...BASE.scales,y:{...BASE.scales.y,max:105}}}});
+}
 
-mkDailyChart("c-daily-S2",S2_DIAS,S2_RET,S2_FIN,S2_N2,S2_FORA,S2_OTIF);
-mkRetChart("c-ret-S2",S2_MOTS,S2_RETM);
-mkCsatChart("c-csat-S2",S2_MOTS,S2_CSATM);
-mkVolChart("c-vol-S2",S2_MOTS,S2_VOLF,S2_VOLN);
+/* ═══ INIT S4 ═══ */
+function initS4(){
+  const s4=STATS_EXT.s4,s3=STATS.s3;
+  const d43=+(s4.ret-s3.ret).toFixed(1);
+  mkKPI('kpi-s4',[
+    {label:'Retenção S4',value:s4.ret.toFixed(1)+'%',accent:s4.ret>=60?'green':'amber',val:s4.ret>=60?'green':'amber',delta:{up:d43>=0,text:(d43>=0?'+':'')+Math.abs(d43).toFixed(1)+' pp vs S3'},sub:'Meta: 60% · 261/485 · 22–28/jun'},
+    {label:'CSAT Tiago S4',value:s4.csat.toFixed(1)+'%',accent:s4.csat>=80?'green':'amber',val:s4.csat>=80?'green':'amber',sub:'Meta: 80% · 50 avaliações · ✓ acima da meta'},
+    {label:'Total tickets S4',value:s4.tot.toLocaleString('pt-BR'),accent:'slate',sub:'22–28/jun · 7 dias'},
+    {label:'OTIF S4',value:s4.otif.toFixed(1)+'%',accent:'green',val:'green',sub:'Fonte: Metabase delivery'}
+  ]);
+  mkProg('prog-fill-s4','prog-val-s4',s4.ret);
+  mkDayChartExt('c-s4-tl',WEEKS_EXT.s4,DAILY_RET_S4,DAILY_CSAT_S4,OTIF_S4);
+  mkVolChartExt('c-s4-vol',WEEKS_EXT.s4);
+  mkMotChartExt('c-s4-mot',WEEKS_EXT.s4);
+  mkTableExt('t-s4',WEEKS_EXT.s4);
+}
 
-mkDailyChart("c-daily-S3",S3_DIAS,S3_RET,S3_FIN,S3_N2,S3_FORA,S3_OTIF);
-mkRetChart("c-ret-S3",S3_MOTS,S3_RETM);
-mkCsatChart("c-csat-S3",S3_MOTS,S3_CSATM);
-mkVolChart("c-vol-S3",S3_MOTS,S3_VOLF,S3_VOLN);
+function initJul(){
+  const j=STATS_EXT.jul;
+  mkKPI('kpi-jul',[
+    {label:'Retenção Jul S1',value:j.ret.toFixed(1)+'%',accent:j.ret>=60?'green':'amber',val:j.ret>=60?'green':'amber',sub:'Meta: 60% · 239/385 · 29/jun–04/jul ✓ acima'},
+    {label:'CSAT Tiago Jul S1',value:j.csat.toFixed(1)+'%',accent:j.csat>=80?'green':'amber',val:j.csat>=80?'green':'amber',sub:'Meta: 80% · 44 avaliações'},
+    {label:'Total tickets Jul S1',value:j.tot.toLocaleString('pt-BR'),accent:'slate',sub:'29/jun–04/jul · 6 dias (incl. sáb)'},
+    {label:'Melhor dia',value:'79,7%',accent:'green',val:'green',sub:'01/jul (qua) · 1º dia acima de 75%'}
+  ]);
+  mkProg('prog-fill-jul','prog-val-jul',j.ret);
+  mkDayChartExt('c-jul-tl',WEEKS_EXT.jul,DAILY_RET_JUL,DAILY_CSAT_JUL,OTIF_JUL);
+  mkVolChartExt('c-jul-vol',WEEKS_EXT.jul);
+  mkMotChartExt('c-jul-mot',WEEKS_EXT.jul);
+  mkTableExt('t-jul',WEEKS_EXT.jul);
+}
 
-mkDailyChart("c-daily-S4",S4_DIAS,S4_RET,S4_FIN,S4_N2,S4_FORA,S4_OTIF);
-mkRetChart("c-ret-S4",S4_MOTS,S4_RETM);
-mkCsatChart("c-csat-S4",S4_MOTS,S4_CSATM);
-mkVolChart("c-vol-S4",S4_MOTS,S4_VOLF,S4_VOLN);
-
-mkDailyChart("c-daily-S1JUL",S1JUL_DIAS,S1JUL_RET,S1JUL_FIN,S1JUL_N2,S1JUL_FORA,S1JUL_OTIF);
-mkRetChart("c-ret-S1JUL",S1JUL_MOTS,S1JUL_RETM);
-mkCsatChart("c-csat-S1JUL",S1JUL_MOTS,S1JUL_CSATM);
-mkVolChart("c-vol-S1JUL",S1JUL_MOTS,S1JUL_VOLF,S1JUL_VOLN);
-
+document.addEventListener('DOMContentLoaded', ()=>{ initS4(); initJul(); });
 </script>
 </body>
 </html>
