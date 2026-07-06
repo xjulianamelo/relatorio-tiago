@@ -5,6 +5,24 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Tiago IA · Relatório Executivo · Junho 2026</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+function switchMonth(m){
+  document.querySelectorAll(".mtab").forEach(b=>b.classList.remove("active"));
+  const mb=document.querySelector('[onclick="switchMonth(\''+m+'\')"]');
+  if(mb) mb.classList.add("active");
+  document.getElementById("subnav-jun").style.display=m==="jun"?"flex":"none";
+  document.getElementById("subnav-jul").style.display=m==="jul"?"flex":"none";
+  switchTab(m==="jun"?"geral":"s1jul",m);
+}
+function switchTab(tab,month){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("show"));
+  document.querySelectorAll(".stab").forEach(b=>b.classList.remove("active"));
+  const p=document.getElementById("page-"+tab+"-"+month);
+  if(p) p.classList.add("show");
+  const btn=document.querySelector('[onclick="switchTab(\''+tab+'\',\''+month+'\')"]');
+  if(btn) btn.classList.add("active");
+}
+</script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:system-ui,sans-serif;background:#f0f4ff;color:#0f172a;font-size:13px;line-height:1.6}
@@ -468,27 +486,6 @@ body{font-family:system-ui,sans-serif;background:#f0f4ff;color:#0f172a;font-size
 
 <script>
 const BLU="#1a47b8",AMB="#d97706",GRN="#16a34a",RED="#dc2626",SL="#94a3b8",ORA="#f97316";
-let currentMonth="jun", currentTab="geral";
-
-function switchMonth(m){
-  currentMonth=m;
-  document.querySelectorAll(".mtab").forEach(b=>b.classList.remove("active"));
-  document.querySelector(`[onclick="switchMonth('${m}')"]`).classList.add("active");
-  document.getElementById("subnav-jun").style.display=m==="jun"?"flex":"none";
-  document.getElementById("subnav-jul").style.display=m==="jul"?"flex":"none";
-  const firstTab=m==="jun"?"geral":"s1jul";
-  switchTab(firstTab,m);
-}
-
-function switchTab(tab,month){
-  document.querySelectorAll(".page").forEach(p=>p.classList.remove("show"));
-  document.querySelectorAll(".stab").forEach(b=>b.classList.remove("active"));
-  const p=document.getElementById(`page-${tab}-${month}`);
-  if(p) p.classList.add("show");
-  const btn=document.querySelector(`[onclick="switchTab('${tab}','${month}')"]`);
-  if(btn) btn.classList.add("active");
-  currentTab=tab;
-}
 
 // ── DADOS ──
 
